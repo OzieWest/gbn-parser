@@ -6,15 +6,6 @@ namespace GetByNameLibrary.Stores
 {
 	public class Roxen : Store
 	{
-		public Roxen()
-		{
-			FileName = "roxen";
-			
-			StoreUrl = "http://roxen.ru";
-			PageCount = 22;
-			PageUrl = "http://roxen.ru/games/?PAGEN_1=";
-		}
-
 		protected override void Parse(string page)
 		{
 			var doc = new HtmlDocument();

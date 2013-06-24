@@ -6,15 +6,6 @@ namespace GetByNameLibrary.Stores
 {
 	public class Igromagaz : Store
 	{
-		public Igromagaz()
-		{
-			FileName = "igromagaz";
-
-			StoreUrl = "http://igromagaz.ru";
-			PageCount = 26;
-			PageUrl = "http://www.igromagaz.ru/catalog/key/?PAGEN_1=";
-		}
-
 		protected override void Parse(String page)
 		{
 			var doc = new HtmlDocument();

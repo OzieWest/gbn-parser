@@ -51,7 +51,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StoreControllerTest.cs" />
+    <Compile Include="StoreControllerTests\CompileGames_Tests.cs" />
+    <Compile Include="StoreControllerTests\StartParse_Tests.cs" />
+    <Compile Include="StoreControllerTests\StoreControllerForTests.cs" />
+    <Compile Include="StoreControllerTests\StoreControllerSpecification.cs" />
+    <Compile Include="StoreControllerTests\LoadStores_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetByNameLibrary\GetByNameLibrary.csproj">

@@ -7,15 +7,6 @@ namespace GetByNameLibrary.Stores
 {
 	public class Shop1c : Store
 	{
-		public Shop1c()
-		{
-			FileName = "shop1c";
-			
-			StoreUrl = "http://shop.1csc.ru";
-			PageCount = 0;
-			PageUrl = "http://shop.1csc.ru/product/search?name=";
-		}
-
 		public override Boolean StartParse()
 		{
 			var result = true;

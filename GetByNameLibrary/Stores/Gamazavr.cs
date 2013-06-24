@@ -6,15 +6,6 @@ namespace GetByNameLibrary.Stores
 {
 	public class Gamazavr : Store
 	{
-		public Gamazavr()
-		{
-			FileName = "gamazavr";
-
-			StoreUrl = "http://gamazavr.ru";
-			PageCount = 26;
-			PageUrl = "http://gamazavr.ru/?page=";
-		}
-
 		protected override void Parse(String page)
 		{
 			var doc = new HtmlDocument();

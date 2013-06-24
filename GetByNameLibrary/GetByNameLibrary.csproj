@@ -33,6 +33,9 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="SerializeLibra">
+      <HintPath>..\..\lib\serializer\SerializeLibra.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleLogger">
       <HintPath>..\..\..\..\..\..\..\_Projects\lib\logger\SimpleLogger.dll</HintPath>
     </Reference>

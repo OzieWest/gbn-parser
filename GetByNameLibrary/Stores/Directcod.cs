@@ -8,15 +8,6 @@ namespace GetByNameLibrary.Stores
 {
     public class Directcod : Store
     {
-        public Directcod()
-        {
-            FileName = "directcod";
-            StoreUrl = "http://direct.cod.ru";
-            PageCount = 0;
-            PageUrl = "http://direct.cod.ru/goods/";
-
-        }
-
         public override Boolean StartParse()
         {
             var result = true;

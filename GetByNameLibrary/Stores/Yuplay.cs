@@ -6,15 +6,6 @@ namespace GetByNameLibrary.Stores
 {
     public class Yuplay : Store
     {
-        public Yuplay()
-        {
-            FileName = "yuplay";
-
-            StoreUrl = "http://yuplay.ru";
-            PageCount = 85;
-            PageUrl = "http://yuplay.ru/catalog/fav/?page=";
-        }
-
         protected override void Parse(String page)
         {
             var doc = new HtmlDocument();

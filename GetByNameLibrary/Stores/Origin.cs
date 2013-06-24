@@ -10,15 +10,6 @@ namespace GetByNameLibrary.Stores
 {
     public class Origin : Store
     {
-        public Origin()
-        {
-            FileName = "origin";
-
-            StoreUrl = "http://store.origin.com";
-            PageCount = 0;
-            PageUrl = "http://store.origin.com/store/?Action=DisplayCategoryProductListPage&SiteID=eaemea&Locale=ru_RU&CallingPageID=CategoryProductListPage&ORIG_VALUE_categoryID=8881800&categoryID=8881800&ORIG_VALUE_childCategoryID=0&childCategoryID=0&itemIdx=";
-        }
-
         public override Boolean StartParse()
         {
             var result = true;

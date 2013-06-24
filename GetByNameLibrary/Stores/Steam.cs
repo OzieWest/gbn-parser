@@ -10,15 +10,6 @@ namespace GetByNameLibrary.Stores
 {
     public class Steam : Store
     {
-        public Steam()
-        {
-            FileName = "steam";
-
-            StoreUrl = "http://store.steampowered.com";
-            PageCount = 0;
-            PageUrl = "";
-        }
-
         public override Boolean StartParse()
         {
             var result = true;
