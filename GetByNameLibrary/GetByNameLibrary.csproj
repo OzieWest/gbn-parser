@@ -30,8 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hammock.ClientProfile">
+      <HintPath>..\packages\TweetSharp.2.3.1\lib\4.0\Hammock.ClientProfile.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\TweetSharp.2.3.1\lib\4.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SerializeLibra">
       <HintPath>..\..\lib\serializer\SerializeLibra.dll</HintPath>
@@ -47,6 +53,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TweetSharp">
+      <HintPath>..\packages\TweetSharp.2.3.1\lib\4.0\TweetSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\StoreController.cs" />
@@ -66,8 +75,13 @@
     <Compile Include="Stores\Steam.cs" />
     <Compile Include="Stores\Store.cs" />
     <Compile Include="Stores\Yuplay.cs" />
+    <Compile Include="Twitter\AuthConfig.cs" />
+    <Compile Include="Twitter\ITwitterParser.cs" />
+    <Compile Include="Twitter\TwitterController.cs" />
+    <Compile Include="Twitter\TwitterParser.cs" />
     <Compile Include="Utilities\ISerializer.cs" />
     <Compile Include="Utilities\Replacer.cs" />
+    <Compile Include="Utilities\RetValue.cs" />
     <Compile Include="Utilities\SerializerToJson.cs" />
     <Compile Include="Utilities\AnswerStack.cs" />
     <Compile Include="Utilities\WebDownloader.cs" />

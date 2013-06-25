@@ -6,7 +6,7 @@ namespace GetByNameLibrary.Stores
 {
 	public class Roxen : Store
 	{
-		protected override void Parse(string page)
+		protected override void Parse(String page)
 		{
 			var doc = new HtmlDocument();
 			doc.LoadHtml(page);
@@ -30,15 +30,15 @@ namespace GetByNameLibrary.Stores
 
 						var gameUrl = StoreUrl + tempTitle.GetAttributeValue("href", String.Empty);
 
-                        _entries.Add(new GameEntry()
-                        {
-                            SearchString = searchString,
-                            StoreUrl = StoreUrl,
-                            Title = title,
-                            GameUrl = gameUrl,
-                            Cost = cost,
-                            Sale = sale
-                        });
+						_entries.Add(new GameEntry()
+						{
+							SearchString = searchString,
+							StoreUrl = StoreUrl,
+							Title = title,
+							GameUrl = gameUrl,
+							Cost = cost,
+							Sale = sale
+						});
 					}
 				}
 			}

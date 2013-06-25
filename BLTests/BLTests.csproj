@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SerializeLibra, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\serializer\SerializeLibra.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -56,6 +60,8 @@
     <Compile Include="StoreControllerTests\StoreControllerForTests.cs" />
     <Compile Include="StoreControllerTests\StoreControllerSpecification.cs" />
     <Compile Include="StoreControllerTests\LoadStores_Tests.cs" />
+    <Compile Include="TwitterControllerTests\TwitterControllerSpecification.cs" />
+    <Compile Include="TwitterControllerTests\CreateTweetsAndSave_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetByNameLibrary\GetByNameLibrary.csproj">

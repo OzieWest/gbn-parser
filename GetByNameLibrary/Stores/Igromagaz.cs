@@ -37,15 +37,15 @@ namespace GetByNameLibrary.Stores
 						cost = tempC.Substring(0, tempC.IndexOf("р."));
 					}
 
-                    _entries.Add(new GameEntry()
-                    {
-                        SearchString = searchString,
-                        StoreUrl = StoreUrl,
-                        Title = title,
-                        GameUrl = gameUrl,
-                        Cost = cost,
-                        Sale = sale
-                    });
+					_entries.Add(new GameEntry()
+					{
+						SearchString = searchString,
+						StoreUrl = StoreUrl,
+						Title = title,
+						GameUrl = gameUrl,
+						Cost = cost,
+						Sale = sale
+					});
 				}
 			}
 		}

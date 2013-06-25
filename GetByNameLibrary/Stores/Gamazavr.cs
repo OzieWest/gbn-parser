@@ -20,17 +20,17 @@ namespace GetByNameLibrary.Stores
 					var searchString = DelBadChar(ref title);
 					var gameUrl = StoreUrl + node.GetAttributeValue("href", String.Empty);
 					var cost = node.SelectSingleNode(".//span[@class='price']//b").InnerText;
-                    var sale = node.SelectSingleNode(".//span[@class='price']//s") != null ? true : false;
+					var sale = node.SelectSingleNode(".//span[@class='price']//s") != null ? true : false;
 
-                    _entries.Add(new GameEntry()
-                    {
-                        SearchString = searchString,
-                        StoreUrl = StoreUrl,
-                        Title = title,
-                        GameUrl = gameUrl,
-                        Cost = cost,
-                        Sale = sale
-                    });
+					_entries.Add(new GameEntry()
+					{
+						SearchString = searchString,
+						StoreUrl = StoreUrl,
+						Title = title,
+						GameUrl = gameUrl,
+						Cost = cost,
+						Sale = sale
+					});
 				}
 			}
 		}

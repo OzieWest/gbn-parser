@@ -1,4 +1,5 @@
 ﻿using GetByNameLibrary.Domains;
+using GetByNameLibrary.Utilities;
 using HtmlAgilityPack;
 using SimpleLogger;
 using System;
@@ -7,22 +8,25 @@ namespace GetByNameLibrary.Stores
 {
 	public class Shop1c : Store
 	{
-		public override Boolean StartParse()
+		public override RetValue<Boolean> StartParse()
 		{
-			var result = true;
+			var result = new RetValue<Boolean>();
 			try
 			{
 				this.Parse(GetPage(PageUrl));
 				this.SaveEntries();
-			}
-			catch (Exception ex) 
-            {
-                result = false;
-                _logger.AddEntry(ex.ToString(), MessageType.Error);
-                _logger.WriteLogs();
-            }
 
-            return result;
+				result.Value = true;
+			}
+			catch (Exception ex)
+			{
+				result.Value = false;
+				result.Description = ex.Message;
+				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.WriteLogs();
+			}
+
+			return result;
 		}
 
 		protected override void Parse(string page)
@@ -43,15 +47,15 @@ namespace GetByNameLibrary.Stores
 					var gameUrl = StoreUrl + node.SelectSingleNode(".//a").GetAttributeValue("href", String.Empty);
 					var cost = node.SelectSingleNode(".//div[@class='price']//span[@class='new']").InnerText;
 
-                    _entries.Add(new GameEntry()
-                    {
-                        SearchString = searchString,
-                        StoreUrl = StoreUrl,
-                        Title = title,
-                        GameUrl = gameUrl,
-                        Cost = cost,
-                        Sale = sale
-                    });
+					_entries.Add(new GameEntry()
+					{
+						SearchString = searchString,
+						StoreUrl = StoreUrl,
+						Title = title,
+						GameUrl = gameUrl,
+						Cost = cost,
+						Sale = sale
+					});
 				}
 			}
 		}

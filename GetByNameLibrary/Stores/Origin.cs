@@ -1,4 +1,5 @@
 ﻿using GetByNameLibrary.Domains;
+using GetByNameLibrary.Utilities;
 using HtmlAgilityPack;
 using SimpleLogger;
 using System;
@@ -8,103 +9,108 @@ using System.Threading;
 
 namespace GetByNameLibrary.Stores
 {
-    public class Origin : Store
-    {
-        public override Boolean StartParse()
-        {
-            var result = true;
-            try
-            {
-                //получаем количество ссылок
-                var tempDocs = new List<string>();
+	public class Origin : Store
+	{
+		public override RetValue<Boolean> StartParse()
+		{
+			var result = new RetValue<Boolean>();
+			try
+			{
+				var _pages = new List<String>();
 
-                var doc = new HtmlDocument();
-                doc.LoadHtml(GetPage(PageUrl + "0"));
+				//получаем количество ссылок
+				var tempDocs = new List<string>();
 
-                var nodes = doc.DocumentNode.SelectNodes("//div[@id='dr_totalSize']/select");
-                if (nodes != null)
-                {
-                    foreach (var node in nodes.Elements("option"))
-                        tempDocs.Add(PageUrl + node.GetAttributeValue("value", String.Empty));
-                }
-                tempDocs.Distinct().ToList().ForEach((item) => { _pages.Add(GetPage(item)); });
+				var doc = new HtmlDocument();
+				doc.LoadHtml(GetPage(PageUrl + "0"));
 
-                //парсим все документы
-                _pages.ForEach((item) => { this.Parse(item); });
+				var nodes = doc.DocumentNode.SelectNodes("//div[@id='dr_totalSize']/select");
+				if (nodes != null)
+				{
+					foreach (var node in nodes.Elements("option"))
+						tempDocs.Add(PageUrl + node.GetAttributeValue("value", String.Empty));
+				}
+				tempDocs.Distinct().ToList().ForEach((item) => { _pages.Add(GetPage(item)); });
 
-                this.SaveEntries();
-            }
-            catch (Exception ex)
-            {
-                result = false;
-                _logger.AddEntry(ex.ToString(), MessageType.Error);
-                _logger.WriteLogs();
-            }
+				//парсим все документы
+				_pages.ForEach((item) => { this.Parse(item); });
 
-            return result;
-        }
+				this.SaveEntries();
 
-        protected override void Parse(String page)
-        {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(page);
+				result.Value = true;
+			}
+			catch (Exception ex)
+			{
+				result.Value = false;
+				result.Description = ex.Message;
+				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.WriteLogs();
+			}
 
-            var nodes = doc.DocumentNode.SelectNodes("//table[@id='dr_categoryProductListTbl']//tr");
-            if (nodes != null)
-            {
-                foreach (var node in nodes)
-                {
-                    var platform = node.SelectSingleNode(".//td[@class='dr_platform']");
+			return result;
+		}
 
-                    if (platform != null)
-                    {
-                        if (platform.InnerText != "Mac")
-                        {
-                            var tempTitle = node.SelectSingleNode(".//td[@class='dr_productName']//a");
+		protected override void Parse(String page)
+		{
+			var doc = new HtmlDocument();
+			doc.LoadHtml(page);
 
-                            if (tempTitle != null)
-                            {
-                                var sale = false;
-                                var title = tempTitle.InnerText;
+			var nodes = doc.DocumentNode.SelectNodes("//table[@id='dr_categoryProductListTbl']//tr");
+			if (nodes != null)
+			{
+				foreach (var node in nodes)
+				{
+					var platform = node.SelectSingleNode(".//td[@class='dr_platform']");
 
-                                var searchString = DelBadChar(ref title);
-                                var gameUrl = tempTitle.GetAttributeValue("href", String.Empty);
+					if (platform != null)
+					{
+						if (platform.InnerText != "Mac")
+						{
+							var tempTitle = node.SelectSingleNode(".//td[@class='dr_productName']//a");
 
-                                var cost = String.Empty;
-                                var tempCost = node.SelectSingleNode(".//span[@class='white2b']/span[@class='pricebold']");
+							if (tempTitle != null)
+							{
+								var sale = false;
+								var title = tempTitle.InnerText;
 
-                                if (tempCost != null)
-                                {
-                                    cost = tempCost.InnerText;
-                                    sale = true;
-                                }
-                                else
-                                {
-                                    tempCost = node.SelectSingleNode(".//span[@class='pricebold']");
-                                    cost = tempCost.InnerText;
-                                }
+								var searchString = DelBadChar(ref title);
+								var gameUrl = tempTitle.GetAttributeValue("href", String.Empty);
 
-                                int costCont;
-                                if ((costCont = cost.IndexOf("руб.")) > -1)
-                                    cost = cost.Substring(0, costCont);
+								var cost = String.Empty;
+								var tempCost = node.SelectSingleNode(".//span[@class='white2b']/span[@class='pricebold']");
 
-                                cost = cost.Replace(",", ".")
-                                           .Replace(" ", ""); //аномальный пробел - не удалять
+								if (tempCost != null)
+								{
+									cost = tempCost.InnerText;
+									sale = true;
+								}
+								else
+								{
+									tempCost = node.SelectSingleNode(".//span[@class='pricebold']");
+									cost = tempCost.InnerText;
+								}
 
-                                _entries.Add(new GameEntry()
-                                {
-                                    SearchString = searchString,
-                                    StoreUrl = StoreUrl,
-                                    Title = title,
-                                    GameUrl = gameUrl,
-                                    Cost = cost,
-                                    Sale = sale
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+								int costCont;
+								if ((costCont = cost.IndexOf("руб.")) > -1)
+									cost = cost.Substring(0, costCont);
+
+								cost = cost.Replace(",", ".")
+										   .Replace(" ", ""); //аномальный пробел - не удалять
+
+								_entries.Add(new GameEntry()
+								{
+									SearchString = searchString,
+									StoreUrl = StoreUrl,
+									Title = title,
+									GameUrl = gameUrl,
+									Cost = cost,
+									Sale = sale
+								});
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

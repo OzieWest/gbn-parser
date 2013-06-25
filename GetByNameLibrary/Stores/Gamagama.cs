@@ -41,15 +41,15 @@ namespace GetByNameLibrary.Stores
 							cost = node.SelectSingleNode(".//div[@class='price_1']//b").InnerText;
 					}
 
-                    _entries.Add(new GameEntry()
-                    {
-                        SearchString = searchString,
-                        StoreUrl = StoreUrl,
-                        Title = title,
-                        GameUrl = gameUrl,
-                        Cost = cost,
-                        Sale = sale
-                    });
+					_entries.Add(new GameEntry()
+					{
+						SearchString = searchString,
+						StoreUrl = StoreUrl,
+						Title = title,
+						GameUrl = gameUrl,
+						Cost = cost,
+						Sale = sale
+					});
 				}
 			}
 		}
