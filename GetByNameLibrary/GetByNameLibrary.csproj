@@ -69,6 +69,7 @@
     <Compile Include="Utilities\ISerializer.cs" />
     <Compile Include="Utilities\Replacer.cs" />
     <Compile Include="Utilities\SerializerToJson.cs" />
+    <Compile Include="Utilities\AnswerStack.cs" />
     <Compile Include="Utilities\WebDownloader.cs" />
   </ItemGroup>
   <ItemGroup />

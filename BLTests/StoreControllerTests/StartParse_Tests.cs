@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GetByNameLibrary.Controllers;
 using System.Collections.Generic;
+using GetByNameLibrary.Utilities;
+using System.Diagnostics;
 
 namespace BLTests.StoreControllerTests
 {
@@ -19,17 +21,21 @@ namespace BLTests.StoreControllerTests
 		public void Expect_Return_CorrectValue()
 		{
 			//arrange
+			var assertList = new List<String>();
 
 			//act
 			var result = RunTestMethod();
-			while (result.Count != 9)
+			while (!result.isEnded())
 			{
-				//
+				var answer = result.Pop();
+				if (answer != null)
+					assertList.Add(answer);
 			}
 
 			//assert
+			assertList.ForEach((answer) => { Assert.AreNotEqual(String.Empty, answer); });
 		}
 
-		List<String> RunTestMethod() { return target.StartParse(); }
+		AnswerStack<String> RunTestMethod() { return target.StartParse(); }
 	}
 }

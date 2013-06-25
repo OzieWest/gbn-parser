@@ -23,10 +23,7 @@ namespace BLTests.StoreControllerTests
 			var result = RunTestMethod();
 
 			//assert
-			result.ForEach((o) =>
-			{
-				Assert.IsNotNull(o);
-			});
+			result.ForEach((o) => { Assert.IsNotNull(o); });
 		}
 
 		List<Store> RunTestMethod() { return target.LoadStores(); }

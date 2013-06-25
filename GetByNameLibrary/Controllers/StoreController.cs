@@ -15,7 +15,6 @@ namespace GetByNameLibrary.Controllers
 	public class StoreController
 	{
 		JsonSerializer _serializer;
-
 		List<Store> _stores;
 
 		public StoreController()
@@ -42,16 +41,16 @@ namespace GetByNameLibrary.Controllers
 			return result;
 		}
 
-		public List<String> StartParse()
+		public AnswerStack<String> StartParse()
 		{
-			var result = new List<String>();
+			var result = new AnswerStack<String>(_stores.Count);
 
 			foreach (var store in _stores)
 			{
 				var thread = new Thread(delegate()
 				{
 					var answer = String.Format("{0}|{1}|{2}", store.FileName, store.StartParse(), store.GetEntries().Count);
-					result.Add(answer);
+					result.Push(answer);
 				}) { Name = store.FileName };
 				thread.Start();
 			}
