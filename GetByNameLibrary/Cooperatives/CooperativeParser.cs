@@ -1,4 +1,5 @@
 ﻿using GetByNameLibrary.Domains;
+using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Utilities;
 using HtmlAgilityPack;
 using SerializeLibra;
@@ -24,10 +25,6 @@ namespace GetByNameLibrary.Cooperatives
 
 		public CooperativeParser()
 		{
-			SiteUrl = "http://www.co-optimus.com";
-			ParseUrl = @"http://www.co-optimus.com/system.php?id=4&page=";
-			FileName = "coops";
-
 			_entries = new List<CoopEntry>();
 
 			_webDownloader = new WebDownloader();

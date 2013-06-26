@@ -60,12 +60,19 @@
   <ItemGroup>
     <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\CooperativeController.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Cooperatives\CooperativeParser.cs" />
     <Compile Include="Domains\CoopEntry.cs" />
     <Compile Include="Domains\GameEntry.cs" />
     <Compile Include="Domains\MetaEntry.cs" />
     <Compile Include="Domains\TwitterEntry.cs" />
     <Compile Include="Domains\UploadTask.cs" />
+    <Compile Include="Interfaces\ICooperativeController.cs" />
+    <Compile Include="Interfaces\IReplacer.cs" />
+    <Compile Include="Interfaces\IStoreController.cs" />
+    <Compile Include="Interfaces\ITwitterController.cs" />
+    <Compile Include="Interfaces\IUploadController.cs" />
+    <Compile Include="Interfaces\IWebDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\Directcod.cs" />
     <Compile Include="Stores\Gamagama.cs" />
@@ -78,13 +85,12 @@
     <Compile Include="Stores\BaseStore.cs" />
     <Compile Include="Stores\Yuplay.cs" />
     <Compile Include="Twitter\AuthConfig.cs" />
-    <Compile Include="Twitter\ITwitterParser.cs" />
+    <Compile Include="Interfaces\ITwitterParser.cs" />
     <Compile Include="Controllers\TwitterController.cs" />
     <Compile Include="Twitter\TwitterParser.cs" />
-    <Compile Include="Utilities\ISerializer.cs" />
+    <Compile Include="Utilities\FTPUploader.cs" />
     <Compile Include="Utilities\Replacer.cs" />
     <Compile Include="Utilities\RetValue.cs" />
-    <Compile Include="Utilities\SerializerToJson.cs" />
     <Compile Include="Utilities\AnswerStack.cs" />
     <Compile Include="Utilities\WebDownloader.cs" />
   </ItemGroup>

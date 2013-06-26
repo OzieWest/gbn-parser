@@ -1,4 +1,5 @@
 ﻿using GetByNameLibrary.Cooperatives;
+using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Utilities;
 using SerializeLibra;
 using SimpleLogger;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleParser.Cooperative
 {
-	public class CooperativeController
+	public class CooperativeController : ICooperativeController
 	{
 		TxtLogger _logger;
 

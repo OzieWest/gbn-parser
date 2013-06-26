@@ -1,11 +1,17 @@
 ﻿using GetByNameLibrary.Domains;
 using HtmlAgilityPack;
+using SimpleLogger;
 using System;
 
 namespace GetByNameLibrary.Stores
 {
 	public class Gamazavr : BaseStore
 	{
+		public Gamazavr()
+		{
+			_logger = new TxtLogger(@"logs\" + FileName + ".logs", true);
+		}
+
 		protected override void Parse(String page)
 		{
 			var doc = new HtmlDocument();

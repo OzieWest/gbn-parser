@@ -1,4 +1,5 @@
 ﻿using GetByNameLibrary.Domains;
+using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Stores;
 using GetByNameLibrary.Utilities;
 using SerializeLibra;
@@ -13,7 +14,7 @@ using System.Web.Script.Serialization;
 
 namespace GetByNameLibrary.Controllers
 {
-	public class StoreController
+	public class StoreController : IStoreController
 	{
 		JsonSerializer _serializer;
 		List<BaseStore> _stores;
@@ -26,34 +27,6 @@ namespace GetByNameLibrary.Controllers
 
 			_stores = new List<BaseStore>();
 			_stores = this.LoadStores().Value;
-		}
-
-		protected RetValue<List<BaseStore>> LoadStores()
-		{
-			var result = new RetValue<List<BaseStore>>();
-			result.Value = new List<BaseStore>();
-			try
-			{
-				var serializer = new JsonSerializer();
-
-				result.Value.Add(serializer.Load<Directcod>(@"configs\directcod.config"));
-				result.Value.Add(serializer.Load<Steam>(@"configs\steam.config"));
-				result.Value.Add(serializer.Load<Yuplay>(@"configs\yuplay.config"));
-				result.Value.Add(serializer.Load<Origin>(@"configs\origin.config"));
-				result.Value.Add(serializer.Load<Roxen>(@"configs\roxen.config"));
-				result.Value.Add(serializer.Load<Gamagama>(@"configs\gamagama.config"));
-				result.Value.Add(serializer.Load<Gamazavr>(@"configs\gamazavr.config"));
-				result.Value.Add(serializer.Load<Igromagaz>(@"configs\igromagaz.config"));
-				result.Value.Add(serializer.Load<Shop1c>(@"configs\shop1c.config"));
-			}
-			catch (Exception ex)
-			{
-				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
-				_logger.WriteLogs();
-			}
-
-			return result;
 		}
 
 		public AnswerStack<String> StartParse()
@@ -110,6 +83,34 @@ namespace GetByNameLibrary.Controllers
 			catch (Exception ex)
 			{
 				result.Value = false;
+				result.Description = ex.Message;
+				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.WriteLogs();
+			}
+
+			return result;
+		}
+
+		protected RetValue<List<BaseStore>> LoadStores()
+		{
+			var result = new RetValue<List<BaseStore>>();
+			result.Value = new List<BaseStore>();
+			try
+			{
+				var serializer = new JsonSerializer();
+
+				result.Value.Add(serializer.Load<Directcod>(@"configs\directcod.config"));
+				result.Value.Add(serializer.Load<Steam>(@"configs\steam.config"));
+				result.Value.Add(serializer.Load<Yuplay>(@"configs\yuplay.config"));
+				result.Value.Add(serializer.Load<Origin>(@"configs\origin.config"));
+				result.Value.Add(serializer.Load<Roxen>(@"configs\roxen.config"));
+				result.Value.Add(serializer.Load<Gamagama>(@"configs\gamagama.config"));
+				result.Value.Add(serializer.Load<Gamazavr>(@"configs\gamazavr.config"));
+				result.Value.Add(serializer.Load<Igromagaz>(@"configs\igromagaz.config"));
+				result.Value.Add(serializer.Load<Shop1c>(@"configs\shop1c.config"));
+			}
+			catch (Exception ex)
+			{
 				result.Description = ex.Message;
 				_logger.AddEntry(ex.ToString(), MessageType.Error);
 				_logger.WriteLogs();

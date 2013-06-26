@@ -8,6 +8,10 @@ namespace GetByNameLibrary.Stores
 {
 	public class Shop1c : BaseStore
 	{
+		public Shop1c()
+		{
+			_logger = new TxtLogger(@"logs\" + FileName + ".logs", true);
+		}
 		public override RetValue<Boolean> StartParse()
 		{
 			var result = new RetValue<Boolean>();

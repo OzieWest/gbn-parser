@@ -11,6 +11,11 @@ namespace GetByNameLibrary.Stores
 {
 	public class Steam : BaseStore
 	{
+		public Steam()
+		{
+			_logger = new TxtLogger(@"logs\" + FileName + ".logs", true);
+		}
+
 		public override RetValue<Boolean> StartParse()
 		{
 			var result = new RetValue<Boolean>();

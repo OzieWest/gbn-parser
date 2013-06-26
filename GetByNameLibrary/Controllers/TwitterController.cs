@@ -1,4 +1,5 @@
-﻿using GetByNameLibrary.Twitter;
+﻿using GetByNameLibrary.Interfaces;
+using GetByNameLibrary.Twitter;
 using GetByNameLibrary.Utilities;
 using SimpleLogger;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GetByNameLibrary.Controllers
 {
-	public class TwitterController
+	public class TwitterController : ITwitterController
 	{
 		TxtLogger _logger;
 

@@ -9,6 +9,11 @@ namespace GetByNameLibrary.Stores
 {
 	public class Directcod : BaseStore
 	{
+		public Directcod()
+		{
+			_logger = new TxtLogger(@"logs\" + FileName + ".logs", true);
+		}
+
 		public override RetValue<Boolean> StartParse()
 		{
 			var result = new RetValue<Boolean>();

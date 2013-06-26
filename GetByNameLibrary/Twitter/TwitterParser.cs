@@ -1,4 +1,5 @@
 ﻿using GetByNameLibrary.Domains;
+using GetByNameLibrary.Interfaces;
 using SerializeLibra;
 using System;
 using System.Collections.Generic;

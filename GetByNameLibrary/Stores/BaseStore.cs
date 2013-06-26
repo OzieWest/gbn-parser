@@ -1,4 +1,5 @@
 ﻿using GetByNameLibrary.Domains;
+using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Utilities;
 using SerializeLibra;
 using SimpleLogger;
@@ -33,7 +34,6 @@ namespace GetByNameLibrary.Stores
 			_replacer = new Replacer();
 			_webDownloader = new WebDownloader();
 			_serializer = new JsonSerializer();
-			_logger = new TxtLogger(@"logs\" + FileName + ".logs", true);
 
 			_entries = new List<GameEntry>();
 		}

@@ -54,6 +54,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CooperativeControllerTests\CompileCoops_Tests.cs" />
+    <Compile Include="CooperativeControllerTests\CooperativeControllerSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoreControllerTests\CompileGames_Tests.cs" />
     <Compile Include="StoreControllerTests\StartParse_Tests.cs" />
