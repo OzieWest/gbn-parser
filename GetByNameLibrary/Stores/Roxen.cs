@@ -4,7 +4,7 @@ using System;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Roxen : Store
+	public class Roxen : BaseStore
 	{
 		protected override void Parse(String page)
 		{
@@ -26,7 +26,7 @@ namespace GetByNameLibrary.Stores
 
 						var tempTitle = node.SelectSingleNode(".//a[@class='game_title_a']");
 						var title = tempTitle.InnerText.Replace("\t", "");
-						var searchString = DelBadChar(ref title);
+						var searchString = this.DelBadChar(ref title);
 
 						var gameUrl = StoreUrl + tempTitle.GetAttributeValue("href", String.Empty);
 

@@ -21,7 +21,8 @@ namespace BLTests.StoreControllerTests
 			var result = target.CompileGames();
 
 			//assert
-			Assert.IsTrue(result > 8000);
+			Assert.IsTrue(!String.IsNullOrEmpty(result.Description));
+			Assert.IsTrue(result.Value);
 		}
 
 		[TestMethod]
@@ -33,7 +34,8 @@ namespace BLTests.StoreControllerTests
 			var result = target.CompileSales();
 
 			//assert
-			Assert.IsTrue(result > 300);
+			Assert.IsNotNull(String.IsNullOrEmpty(result.Description));
+			Assert.IsTrue(result.Value);
 		}
 	}
 }

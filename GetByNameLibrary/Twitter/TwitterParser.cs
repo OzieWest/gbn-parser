@@ -22,7 +22,7 @@ namespace GetByNameLibrary.Twitter
 
 		public void SaveEntries()
 		{
-			_serializer.Save<List<TwitterEntry>>(_entries, @"query\tweets.json");
+			_serializer.Save<List<TwitterEntry>>(_entries, @"completed\tweets.json");
 		}
 
 		public List<TwitterEntry> GetTweets()

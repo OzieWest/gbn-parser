@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="Controllers\CooperativeController.cs" />
+    <Compile Include="Cooperatives\CooperativeParser.cs" />
     <Compile Include="Domains\CoopEntry.cs" />
     <Compile Include="Domains\GameEntry.cs" />
     <Compile Include="Domains\MetaEntry.cs" />
@@ -73,11 +75,11 @@
     <Compile Include="Stores\Roxen.cs" />
     <Compile Include="Stores\Shop1c.cs" />
     <Compile Include="Stores\Steam.cs" />
-    <Compile Include="Stores\Store.cs" />
+    <Compile Include="Stores\BaseStore.cs" />
     <Compile Include="Stores\Yuplay.cs" />
     <Compile Include="Twitter\AuthConfig.cs" />
     <Compile Include="Twitter\ITwitterParser.cs" />
-    <Compile Include="Twitter\TwitterController.cs" />
+    <Compile Include="Controllers\TwitterController.cs" />
     <Compile Include="Twitter\TwitterParser.cs" />
     <Compile Include="Utilities\ISerializer.cs" />
     <Compile Include="Utilities\Replacer.cs" />

@@ -9,17 +9,16 @@ using System.Threading;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Origin : Store
+	public class Origin : BaseStore
 	{
 		public override RetValue<Boolean> StartParse()
 		{
 			var result = new RetValue<Boolean>();
 			try
 			{
-				var _pages = new List<String>();
+				var pages = new List<String>();
 
-				//получаем количество ссылок
-				var tempDocs = new List<string>();
+				var tempDocs = new List<String>();
 
 				var doc = new HtmlDocument();
 				doc.LoadHtml(GetPage(PageUrl + "0"));
@@ -30,14 +29,14 @@ namespace GetByNameLibrary.Stores
 					foreach (var node in nodes.Elements("option"))
 						tempDocs.Add(PageUrl + node.GetAttributeValue("value", String.Empty));
 				}
-				tempDocs.Distinct().ToList().ForEach((item) => { _pages.Add(GetPage(item)); });
+				tempDocs.Distinct().ToList().ForEach((item) => { pages.Add(GetPage(item)); });
 
-				//парсим все документы
-				_pages.ForEach((item) => { this.Parse(item); });
+				pages.ForEach((item) => { this.Parse(item); });
 
 				this.SaveEntries();
 
 				result.Value = true;
+				result.Description = String.Format("{0}", _entries.Count);
 			}
 			catch (Exception ex)
 			{

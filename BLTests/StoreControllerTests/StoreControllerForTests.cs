@@ -1,5 +1,6 @@
 ﻿using GetByNameLibrary.Controllers;
 using GetByNameLibrary.Stores;
+using GetByNameLibrary.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace BLTests.StoreControllerTests
 {
 	public class StoreControllerForTests : StoreController
 	{
-		new public List<Store> LoadStores()
+		new public RetValue<List<BaseStore>> LoadStores()
 		{
 			return base.LoadStores();
 		}

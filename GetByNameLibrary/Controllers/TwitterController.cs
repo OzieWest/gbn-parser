@@ -1,4 +1,5 @@
-﻿using GetByNameLibrary.Utilities;
+﻿using GetByNameLibrary.Twitter;
+using GetByNameLibrary.Utilities;
 using SimpleLogger;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GetByNameLibrary.Twitter
+namespace GetByNameLibrary.Controllers
 {
 	public class TwitterController
 	{
@@ -14,10 +15,10 @@ namespace GetByNameLibrary.Twitter
 
 		public TwitterController() 
 		{
-			_logger = new TxtLogger(@"twitterController.logs", true);
+			_logger = new TxtLogger(@"logs\twitterController.logs", true);
 		}
 
-		public RetValue<Boolean> CreateTweetsAndSave()
+		public RetValue<Boolean> CompileTweets()
 		{
 			var result = new RetValue<Boolean>();
 			try

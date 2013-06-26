@@ -6,7 +6,7 @@ using System;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Shop1c : Store
+	public class Shop1c : BaseStore
 	{
 		public override RetValue<Boolean> StartParse()
 		{
@@ -17,6 +17,7 @@ namespace GetByNameLibrary.Stores
 				this.SaveEntries();
 
 				result.Value = true;
+				result.Description = String.Format("{0}", _entries.Count);
 			}
 			catch (Exception ex)
 			{

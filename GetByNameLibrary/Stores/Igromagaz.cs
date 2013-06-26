@@ -4,7 +4,7 @@ using System;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Igromagaz : Store
+	public class Igromagaz : BaseStore
 	{
 		protected override void Parse(String page)
 		{

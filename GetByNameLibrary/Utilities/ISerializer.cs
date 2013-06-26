@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GetByNameLibrary.Utilities
 {
-	public interface ISerializer
+	public interface oldISerializer
 	{
 		void SaveList<T>(IEnumerable<T> obj, String fileName) where T : class;
 		void LoadList<T>(String fileName) where T : class;

@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace GetByNameLibrary.Utilities
 {
-	public class SerializerToJson : ISerializer
+	public class oldSerializerToJson : oldISerializer
 	{
 		public int Count { get; set; }
 		public String FolderName { get; set; }
@@ -19,7 +19,7 @@ namespace GetByNameLibrary.Utilities
 		List<TwitterEntry> _tweets;
 		List<MetaEntry> _metas;
 
-		public SerializerToJson()
+		public oldSerializerToJson()
 		{
 			_games = new List<GameEntry>();
 			_coops = new List<CoopEntry>();

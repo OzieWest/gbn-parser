@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Directcod : Store
+	public class Directcod : BaseStore
 	{
 		public override RetValue<Boolean> StartParse()
 		{
@@ -18,6 +18,7 @@ namespace GetByNameLibrary.Stores
 				this.SaveEntries();
 
 				result.Value = true;
+				result.Description = String.Format("{0}", _entries.Count);
 			}
 			catch (Exception ex)
 			{
@@ -41,7 +42,7 @@ namespace GetByNameLibrary.Stores
 				var names = new List<String>();
 				var links = new List<String>();
 				var costs = new List<String>();
-				var _salesGameIndex = new List<int>();
+				var salesGameIndex = new List<int>();
 
 				foreach (var node in nodes.Elements())
 				{
@@ -59,7 +60,7 @@ namespace GetByNameLibrary.Stores
 						{
 							cost = tempCost.InnerText;
 							costs.Add(cost);
-							_salesGameIndex.Add(costs.Count - 1);
+							salesGameIndex.Add(costs.Count - 1);
 						}
 						else
 						{
@@ -89,7 +90,7 @@ namespace GetByNameLibrary.Stores
 						String gameUrl = links[i];
 						String cost = costs[i];
 
-						_salesGameIndex.ForEach((item) =>
+						salesGameIndex.ForEach((item) =>
 						{
 							if (item == i)
 								sale = true;

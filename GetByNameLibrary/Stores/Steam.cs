@@ -9,7 +9,7 @@ using GetByNameLibrary.Utilities;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Steam : Store
+	public class Steam : BaseStore
 	{
 		public override RetValue<Boolean> StartParse()
 		{
@@ -24,16 +24,17 @@ namespace GetByNameLibrary.Stores
 				categoryUrls.Add(@"http://store.steampowered.com/search/?sort_by=&sort_order=ASC&category1=996&page=");
 				categoryUrls.Add(@"http://store.steampowered.com/search/?sort_by=&sort_order=ASC&category1=21&page=");
 
-				foreach (var url in categoryUrls)
+				categoryUrls.ForEach((url) =>
 				{
 					var tempString = this.GetPage(url + "1");
 
 					var doc = new HtmlDocument();
 					doc.LoadHtml(tempString);
 
-					var node = doc.DocumentNode.SelectSingleNode("//div[@class='search_pagination_right']");
-
-					var list = node.Elements("a").ToList();
+					var list = doc.DocumentNode
+								  .SelectSingleNode("//div[@class='search_pagination_right']")
+								  .Elements("a")
+								  .ToList();
 
 					var Count = Convert.ToInt32(list[list.Count - 2].InnerText);
 
@@ -42,12 +43,13 @@ namespace GetByNameLibrary.Stores
 						var page = this.GetPage(url + (j + 1).ToString());
 						_pages.Add(page);
 					}
-				}
+				});
 
 				_pages.ForEach((item) => { this.Parse(item); });
 
 				this.SaveEntries();
 				result.Value = true;
+				result.Description = String.Format("{0}", _entries.Count);
 			}
 			catch (Exception ex)
 			{

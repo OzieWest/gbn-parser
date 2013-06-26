@@ -2,6 +2,7 @@
 using GetByNameLibrary.Stores;
 using GetByNameLibrary.Utilities;
 using SerializeLibra;
+using SimpleLogger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,28 +16,42 @@ namespace GetByNameLibrary.Controllers
 	public class StoreController
 	{
 		JsonSerializer _serializer;
-		List<Store> _stores;
+		List<BaseStore> _stores;
+		TxtLogger _logger;
 
 		public StoreController()
 		{
 			_serializer = new JsonSerializer();
-			_stores = this.LoadStores();
+			_logger = new TxtLogger(@"logs\storeController.logs");
+
+			_stores = new List<BaseStore>();
+			_stores = this.LoadStores().Value;
 		}
 
-		protected List<Store> LoadStores()
+		protected RetValue<List<BaseStore>> LoadStores()
 		{
-			var serializer = new JsonSerializer();
+			var result = new RetValue<List<BaseStore>>();
+			result.Value = new List<BaseStore>();
+			try
+			{
+				var serializer = new JsonSerializer();
 
-			var result = new List<Store>();
-			result.Add(serializer.Load<Directcod>(@"configs\directcod.config"));
-			result.Add(serializer.Load<Steam>(@"configs\steam.config"));
-			result.Add(serializer.Load<Yuplay>(@"configs\yuplay.config"));
-			result.Add(serializer.Load<Origin>(@"configs\origin.config"));
-			result.Add(serializer.Load<Roxen>(@"configs\roxen.config"));
-			result.Add(serializer.Load<Gamagama>(@"configs\gamagama.config"));
-			result.Add(serializer.Load<Gamazavr>(@"configs\gamazavr.config"));
-			result.Add(serializer.Load<Igromagaz>(@"configs\igromagaz.config"));
-			result.Add(serializer.Load<Shop1c>(@"configs\shop1c.config"));
+				result.Value.Add(serializer.Load<Directcod>(@"configs\directcod.config"));
+				result.Value.Add(serializer.Load<Steam>(@"configs\steam.config"));
+				result.Value.Add(serializer.Load<Yuplay>(@"configs\yuplay.config"));
+				result.Value.Add(serializer.Load<Origin>(@"configs\origin.config"));
+				result.Value.Add(serializer.Load<Roxen>(@"configs\roxen.config"));
+				result.Value.Add(serializer.Load<Gamagama>(@"configs\gamagama.config"));
+				result.Value.Add(serializer.Load<Gamazavr>(@"configs\gamazavr.config"));
+				result.Value.Add(serializer.Load<Igromagaz>(@"configs\igromagaz.config"));
+				result.Value.Add(serializer.Load<Shop1c>(@"configs\shop1c.config"));
+			}
+			catch (Exception ex)
+			{
+				result.Description = ex.Message;
+				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.WriteLogs();
+			}
 
 			return result;
 		}
@@ -45,7 +60,7 @@ namespace GetByNameLibrary.Controllers
 		{
 			var result = new AnswerStack<String>(_stores.Count);
 
-			foreach (var store in _stores)
+			_stores.ForEach((store) =>
 			{
 				var thread = new Thread(delegate()
 				{
@@ -53,48 +68,70 @@ namespace GetByNameLibrary.Controllers
 					result.Push(answer);
 				}) { Name = store.FileName };
 				thread.Start();
+			});
+
+			return result;
+		}
+
+		public RetValue<Boolean> CompileGames()
+		{
+			var result = new RetValue<Boolean>();
+			try
+			{
+				var saveList = this.GetGameEntries(false);
+				_serializer.Save<List<GameEntry>>(saveList, @"completed\games.json");
+
+				result.Value = true;
+				result.Description = String.Format("{0}", saveList.Count);
+			}
+			catch (Exception ex)
+			{
+				result.Value = false;
+				result.Description = ex.Message;
+				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.WriteLogs();
 			}
 
 			return result;
 		}
 
-		public int CompileGames()
+		public RetValue<Boolean> CompileSales()
 		{
-			var list = this.GetGameEntries(String.Empty, true, false);
+			var result = new RetValue<Boolean>();
+			try
+			{
+				var saveList = this.GetGameEntries(true);
 
-			_serializer.Save<List<GameEntry>>(list, @"query\games.json");
+				_serializer.Save<List<GameEntry>>(saveList, @"completed\sales.json");
 
-			return list.Count;
+				result.Value = true;
+				result.Description = String.Format("{0}", saveList.Count);
+			}
+			catch (Exception ex)
+			{
+				result.Value = false;
+				result.Description = ex.Message;
+				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.WriteLogs();
+			}
+
+			return result;
 		}
 
-		public int CompileSales()
+		protected List<GameEntry> GetGameEntries(Boolean IsSale)
 		{
-			var list = this.GetGameEntries(String.Empty, true, true);
-
-			_serializer.Save<List<GameEntry>>(list, @"query\sales.json");
-
-			return list.Count;
-		}
-
-		public List<GameEntry> GetGameEntries(String searchName, Boolean IsOrdered = false, Boolean IsSale = false)
-		{
-			var games = new List<GameEntry>();
-
+			var result = new List<GameEntry>();
 			_stores.ForEach((store) =>
 			{
-				games.AddRange(_serializer.Load<List<GameEntry>>(@"query\" + store.FileName + @".json"));
+				result.AddRange(_serializer.Load<List<GameEntry>>(@"incompleted\" + store.FileName + @".json"));
 			});
-
-			if (!String.IsNullOrEmpty(searchName))
-				games = games.Where(ent => ent.SearchString.Contains(searchName)).ToList();
-
+			
 			if (IsSale)
-				games = games.Where(ent => ent.Sale == true).ToList();
+				result = result.Where(ent => ent.Sale == true).ToList();
 
-			if (IsOrdered)
-				games = games.OrderBy(ent => ent.SearchString).ToList();
+			result = result.OrderBy(ent => ent.SearchString).ToList();
 
-			return games;
+			return result;
 		}
 	}
 }

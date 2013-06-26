@@ -61,7 +61,7 @@
     <Compile Include="StoreControllerTests\StoreControllerSpecification.cs" />
     <Compile Include="StoreControllerTests\LoadStores_Tests.cs" />
     <Compile Include="TwitterControllerTests\TwitterControllerSpecification.cs" />
-    <Compile Include="TwitterControllerTests\CreateTweetsAndSave_Test.cs" />
+    <Compile Include="TwitterControllerTests\CompileTweets_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetByNameLibrary\GetByNameLibrary.csproj">

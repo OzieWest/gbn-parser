@@ -4,7 +4,7 @@ using System;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Gamazavr : Store
+	public class Gamazavr : BaseStore
 	{
 		protected override void Parse(String page)
 		{

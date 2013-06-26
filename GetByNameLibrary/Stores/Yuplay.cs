@@ -4,7 +4,7 @@ using System;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Yuplay : Store
+	public class Yuplay : BaseStore
 	{
 		protected override void Parse(String page)
 		{

@@ -1,4 +1,5 @@
-﻿using GetByNameLibrary.Twitter;
+﻿using GetByNameLibrary.Controllers;
+using GetByNameLibrary.Twitter;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using GetByNameLibrary.Stores;
+using GetByNameLibrary.Utilities;
 
 namespace BLTests.StoreControllerTests
 {
@@ -23,9 +24,10 @@ namespace BLTests.StoreControllerTests
 			var result = RunTestMethod();
 
 			//assert
-			result.ForEach((o) => { Assert.IsNotNull(o); });
+			result.Value.ForEach((o) => { Assert.IsNotNull(o); });
+			Assert.IsTrue(String.IsNullOrEmpty(result.Description));
 		}
 
-		List<Store> RunTestMethod() { return target.LoadStores(); }
+		RetValue<List<BaseStore>> RunTestMethod() { return target.LoadStores(); }
 	}
 }

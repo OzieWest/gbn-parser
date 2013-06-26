@@ -5,7 +5,7 @@ using GetByNameLibrary.Utilities;
 namespace BLTests.TwitterControllerTests
 {
 	[TestClass]
-	public class CreateTweetsAndSave_Test : TwitterControllerSpecification
+	public class CompileTweets_Test : TwitterControllerSpecification
 	{
 		[TestInitialize]
 		public void Given()
@@ -25,6 +25,6 @@ namespace BLTests.TwitterControllerTests
 			Assert.IsTrue(result.Value);
 		}
 
-		RetValue<Boolean> RunTestMethod() { return target.CreateTweetsAndSave(); }
+		RetValue<Boolean> RunTestMethod() { return target.CompileTweets(); }
 	}
 }
