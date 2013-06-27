@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace GetByNameLibrary.Interfaces
 {
-	public interface ICooperativeController
+	public interface IParser<T> where T: class
 	{
-		RetValue<Boolean> CompileCoops();
+		List<T> GetEntries();
+		RetValue<Boolean> StartParser();
 	}
 }

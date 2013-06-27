@@ -1,6 +1,8 @@
 ﻿using GetByNameLibrary.Domains;
 using GetByNameLibrary.Interfaces;
+using GetByNameLibrary.Utilities;
 using SerializeLibra;
+using SimpleLogger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,40 +12,63 @@ using TweetSharp;
 
 namespace GetByNameLibrary.Twitter
 {
-	public class TwitterParser : ITwitterParser
+	public class TwitterParser : ITwitter
 	{
+		public int EntriesCount { get; set; }
+		public ISerializer Serializer { get; set; }
+		public TxtLogger Logger { get; set; }
+
 		List<TwitterEntry> _entries;
-		ISerializer _serializer;
 
 		public TwitterParser()
 		{
 			_entries = new List<TwitterEntry>();
-			_serializer = new JsonSerializer();
 		}
 
-		public void SaveEntries()
-		{
-			_serializer.Save<List<TwitterEntry>>(_entries, @"completed\tweets.json");
-		}
-
-		public List<TwitterEntry> GetTweets()
+		public List<TwitterEntry> GetEntries()
 		{
 			return _entries;
 		}
 
-		public Boolean SendMessage(String msg)
+		public RetValue<Boolean> StartParser()
 		{
-			throw new NotImplementedException();
+			var result = new RetValue<Boolean>();
+			try
+			{
+				if (this.GrabTimeLine())
+				{
+					this.SaveEntries();
+					result.Value = true;
+				}
+				else
+				{
+					result.Value = false;
+					result.Description = "method |GrabTimeLine| return false";
+				}
+			}
+			catch (Exception ex)
+			{
+				result.Value = false;
+				result.Description = ex.Message;
+				Logger.AddEntry(ex.ToString(), MessageType.Error);
+				Logger.WriteLogs();
+			}
+			return result;
 		}
 
-		public Boolean GrabTimeLine(int count)
+		protected void SaveEntries()
 		{
-			var config = _serializer.Load<AuthConfig>(@"configs\twitter.config");
+			Serializer.Save<List<TwitterEntry>>(_entries, @"completed\tweets.json");
+		}
+
+		protected Boolean GrabTimeLine()
+		{
+			var config = Serializer.Load<AuthConfig>(@"configs\twitter.config");
 
 			var service = new TwitterService(config.ConsumerKey, config.ConsumerSecret);
 			service.AuthenticateWith(config.AccessToken, config.AccessTokenSecret);
 
-			var tweets = service.ListTweetsOnUserTimeline(new ListTweetsOnUserTimelineOptions() { Count = count }).ToList();
+			var tweets = service.ListTweetsOnUserTimeline(new ListTweetsOnUserTimelineOptions() { Count = EntriesCount }).ToList();
 
 			tweets.ForEach((tweet) =>
 			{
@@ -67,7 +92,7 @@ namespace GetByNameLibrary.Twitter
 				});
 			});
 
-			return count > 0 && tweets.Count() > 0 ? true : false;
+			return EntriesCount > 0 && tweets.Count() > 0 ? true : false;
 		}
 	}
 }

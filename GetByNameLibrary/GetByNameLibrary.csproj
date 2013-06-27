@@ -67,10 +67,12 @@
     <Compile Include="Domains\MetaEntry.cs" />
     <Compile Include="Domains\TwitterEntry.cs" />
     <Compile Include="Domains\UploadTask.cs" />
-    <Compile Include="Interfaces\ICooperativeController.cs" />
+    <Compile Include="Interfaces\ICooperative.cs" />
+    <Compile Include="Interfaces\IParser.cs" />
+    <Compile Include="Interfaces\ITwitter.cs" />
     <Compile Include="Interfaces\IReplacer.cs" />
     <Compile Include="Interfaces\IStoreController.cs" />
-    <Compile Include="Interfaces\ITwitterController.cs" />
+    <Compile Include="Interfaces\ICompile.cs" />
     <Compile Include="Interfaces\IUploadController.cs" />
     <Compile Include="Interfaces\IWebDownloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,7 +87,6 @@
     <Compile Include="Stores\BaseStore.cs" />
     <Compile Include="Stores\Yuplay.cs" />
     <Compile Include="Twitter\AuthConfig.cs" />
-    <Compile Include="Interfaces\ITwitterParser.cs" />
     <Compile Include="Controllers\TwitterController.cs" />
     <Compile Include="Twitter\TwitterParser.cs" />
     <Compile Include="Utilities\FTPUploader.cs" />

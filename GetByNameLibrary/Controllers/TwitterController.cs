@@ -1,52 +1,35 @@
 ﻿using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Twitter;
 using GetByNameLibrary.Utilities;
+using SerializeLibra;
 using SimpleLogger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TweetSharp;
 
 namespace GetByNameLibrary.Controllers
 {
-	public class TwitterController : ITwitterController
+	public class TwitterController : ICompile
 	{
-		TxtLogger _logger;
+		ITwitter _twitterParser;
 
-		public TwitterController() 
+		public TwitterController()
 		{
-			_logger = new TxtLogger(@"logs\twitterController.logs", true);
+			_twitterParser = new TwitterParser();
+			_twitterParser.Serializer = new JsonSerializer();
+			_twitterParser.Logger = new TxtLogger(@"logs\" + DateTime.Today.ToShortDateString() + ".logs", true);
+			_twitterParser.EntriesCount = 10;
 		}
 
-		public RetValue<Boolean> CompileTweets()
+		public RetValue<Boolean> Compile()
 		{
-			var result = new RetValue<Boolean>();
-			try
-			{
-				var twitterParser = new TwitterParser();
-				var grabStatus = twitterParser.GrabTimeLine(10);
+			var result = _twitterParser.StartParser();
 
-				if (grabStatus)
-				{
-					twitterParser.SaveEntries();
-					result.Description = "Count: " + twitterParser.GetTweets().Count.ToString();
-				}
-				else
-				{
-					result.Description = "method |GrabTimeLine| return |false|";
-				}
-
-				result.Value = grabStatus;
-				
-			}
-			catch (Exception ex)
-			{
-				result.Value = false;
-				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
-				_logger.WriteLogs();
-			}
+			if (result.Value)
+				result.Description = "Count: " + _twitterParser.GetEntries().Count.ToString();
 
 			return result;
 		}

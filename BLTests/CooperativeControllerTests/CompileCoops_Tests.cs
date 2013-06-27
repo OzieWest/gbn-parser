@@ -18,7 +18,7 @@ namespace BLTests.CooperativeControllerTests
 			//arrange
 
 			//act
-			var result = target.CompileCoops();
+			var result = target.Compile();
 
 			//assert
 			Assert.IsTrue(!String.IsNullOrEmpty(result.Description));

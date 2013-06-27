@@ -8,28 +8,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Web.Script.Serialization;
 
 namespace GetByNameLibrary.Cooperatives
 {
-	public class CooperativeParser
+	public class CooperativeParser : ICooperative
 	{
 		public String SiteUrl { get; set; }
 		public String ParseUrl { get; set; }
 		public String FileName { get; set; }
 
-		List<CoopEntry> _entries;
+		[ScriptIgnore]
+		public ISerializer Serializer { get; set; }
+		[ScriptIgnore]
+		public IWebDownloader WebDownloader { get; set; }
+		[ScriptIgnore]
+		public TxtLogger Logger { get; set; }
 
-		ISerializer _serializer;
-		IWebDownloader _webDownloader;
-		TxtLogger _logger;
+		List<CoopEntry> _entries;
 
 		public CooperativeParser()
 		{
 			_entries = new List<CoopEntry>();
-
-			_webDownloader = new WebDownloader();
-			_serializer = new JsonSerializer();
-			_logger = new TxtLogger(@"logs\cooperativeController.logs");
 		}
 
 		public List<CoopEntry> GetEntries()
@@ -37,9 +37,46 @@ namespace GetByNameLibrary.Cooperatives
 			return _entries;
 		}
 
+		public RetValue<Boolean> StartParser()
+		{
+			var result = new RetValue<Boolean>();
+			try
+			{
+				var pages = new List<String>();
+
+				var doc = new HtmlDocument();
+				doc.LoadHtml(this.GetPage(ParseUrl + "0"));
+
+				var nodes = doc.DocumentNode.SelectNodes("//div[@class='pagerNav']//li//a");
+				if (nodes != null)
+				{
+					foreach (var node in nodes)
+					{
+						var link = SiteUrl + node.GetAttributeValue("href", String.Empty);
+						pages.Add(this.GetPage(link));
+					}
+				}
+
+				pages.ForEach((item) => { this.Parse(item); });
+				this.SaveEntries();
+
+				result.Value = true;
+				result.Description = String.Format("{0}", _entries.Count);
+			}
+			catch (Exception ex)
+			{
+				result.Value = false;
+				result.Description = ex.Message;
+				Logger.AddEntry(ex.ToString(), MessageType.Error);
+				Logger.WriteLogs();
+			}
+
+			return result;
+		}
+
 		protected String GetPage(String path)
 		{
-			return _webDownloader.GetPage(path);
+			return WebDownloader.GetPage(path);
 		}
 
 		protected void Parse(String page)
@@ -80,47 +117,9 @@ namespace GetByNameLibrary.Cooperatives
 			}
 		}
 
-		//http://www.co-optimus.com/system.php?id=4&page=
-		public RetValue<Boolean> StartParser()
-		{
-			var result = new RetValue<Boolean>();
-			try
-			{
-				var pages = new List<String>();
-
-				var doc = new HtmlDocument();
-				doc.LoadHtml(this.GetPage(ParseUrl + "0"));
-
-				var nodes = doc.DocumentNode.SelectNodes("//div[@class='pagerNav']//li//a");
-				if (nodes != null)
-				{
-					foreach (var node in nodes)
-					{
-						var link = SiteUrl + node.GetAttributeValue("href", String.Empty);
-						pages.Add(this.GetPage(link));
-					}
-				}
-
-				pages.ForEach((item) => { this.Parse(item); });
-				this.SaveEntries();
-
-				result.Value = true;
-				result.Description = String.Format("{0}", _entries.Count);
-			}
-			catch (Exception ex) 
-			{
-				result.Value = false;
-				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
-				_logger.WriteLogs();
-			}
-
-			return result;
-		}
-
 		protected void SaveEntries()
 		{
-			_serializer.Save<List<CoopEntry>>(_entries, @"completed\" + FileName + ".json");
+			Serializer.Save<List<CoopEntry>>(_entries, @"completed\" + FileName + ".json");
 		}
 	}
 }

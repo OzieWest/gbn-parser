@@ -11,37 +11,26 @@ using System.Threading.Tasks;
 
 namespace ConsoleParser.Cooperative
 {
-	public class CooperativeController : ICooperativeController
+	public class CooperativeController : ICompile
 	{
+		ICooperative _cooperativeParser;
+		ISerializer _serializer;
 		TxtLogger _logger;
 
 		public CooperativeController()
 		{
-			_logger = new TxtLogger(@"logs\cooperativeController.logs");
+			_serializer = new JsonSerializer();
+			_logger = new TxtLogger(@"logs\" + DateTime.Today.ToShortDateString() + ".logs");
+
+			_cooperativeParser = _serializer.Load<CooperativeParser>(@"configs\CooperativeParser.config");
+			_cooperativeParser.WebDownloader = new WebDownloader();
+			_cooperativeParser.Serializer = _serializer;
+			_cooperativeParser.Logger = _logger;
 		}
 
-		protected CooperativeParser LoadConfig()
+		public RetValue<Boolean> Compile()
 		{
-			return new JsonSerializer().Load<CooperativeParser>(@"configs\CooperativeParser.config");
-		}
-
-		public RetValue<Boolean> CompileCoops()
-		{
-			var result = new RetValue<Boolean>();
-			try
-			{
-				var parserStatus = this.LoadConfig().StartParser();
-
-				result.Value = true;
-				result.Description = String.Format("{0} | {1}", parserStatus.Value, parserStatus.Description);
-			}
-			catch (Exception ex)
-			{
-				result.Value = false;
-				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
-				_logger.WriteLogs();
-			}
+			var result = _cooperativeParser.StartParser();
 
 			return result;
 		}

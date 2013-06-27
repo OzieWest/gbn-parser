@@ -14,7 +14,7 @@ namespace BLTests.TwitterControllerTests
 		}
 
 		[TestMethod]
-		public void Expect_Return_True()
+		public void When_CompileTweets_Expect_Return_True()
 		{
 			//arrange
 
@@ -25,6 +25,6 @@ namespace BLTests.TwitterControllerTests
 			Assert.IsTrue(result.Value);
 		}
 
-		RetValue<Boolean> RunTestMethod() { return target.CompileTweets(); }
+		RetValue<Boolean> RunTestMethod() { return target.Compile(); }
 	}
 }
