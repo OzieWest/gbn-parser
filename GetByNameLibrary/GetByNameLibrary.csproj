@@ -68,6 +68,7 @@
     <Compile Include="Domains\TwitterEntry.cs" />
     <Compile Include="Domains\UploadTask.cs" />
     <Compile Include="Interfaces\ICooperative.cs" />
+    <Compile Include="Interfaces\IMetacritic.cs" />
     <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="Interfaces\ITwitter.cs" />
     <Compile Include="Interfaces\IReplacer.cs" />
@@ -75,6 +76,8 @@
     <Compile Include="Interfaces\ICompile.cs" />
     <Compile Include="Interfaces\IUploadController.cs" />
     <Compile Include="Interfaces\IWebDownloader.cs" />
+    <Compile Include="Controllers\MetacriticController.cs" />
+    <Compile Include="Metacritic\MetacriticParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\Directcod.cs" />
     <Compile Include="Stores\Gamagama.cs" />

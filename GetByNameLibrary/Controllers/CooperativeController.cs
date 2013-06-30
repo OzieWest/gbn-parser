@@ -22,7 +22,7 @@ namespace ConsoleParser.Cooperative
 			_serializer = new JsonSerializer();
 			_logger = new TxtLogger(@"logs\" + DateTime.Today.ToShortDateString() + ".logs");
 
-			_cooperativeParser = _serializer.Load<CooperativeParser>(@"configs\CooperativeParser.config");
+			_cooperativeParser = this.LoadConfig();
 			_cooperativeParser.WebDownloader = new WebDownloader();
 			_cooperativeParser.Serializer = _serializer;
 			_cooperativeParser.Logger = _logger;
@@ -30,9 +30,12 @@ namespace ConsoleParser.Cooperative
 
 		public RetValue<Boolean> Compile()
 		{
-			var result = _cooperativeParser.StartParser();
+			return _cooperativeParser.StartParser();
+		}
 
-			return result;
+		CooperativeParser LoadConfig()
+		{
+			return _serializer.Load<CooperativeParser>(@"configs\CooperativeParser.config");
 		}
 	}
 }

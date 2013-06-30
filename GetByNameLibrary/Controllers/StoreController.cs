@@ -46,39 +46,19 @@ namespace GetByNameLibrary.Controllers
 			return result;
 		}
 
-		public RetValue<Boolean> CompileGames()
+		public RetValue<Boolean> Compile()
 		{
 			var result = new RetValue<Boolean>();
 			try
 			{
-				var saveList = this.GetGameEntries(false);
-				_serializer.Save<List<GameEntry>>(saveList, @"completed\games.json");
+				var allgameList = this.GetGameEntries(false);
+				_serializer.Save<List<GameEntry>>(allgameList, @"completed\games.json");
+
+				var salesList = this.GetGameEntries(true);
+				_serializer.Save<List<GameEntry>>(salesList, @"completed\sales.json");
 
 				result.Value = true;
-				result.Description = String.Format("{0}", saveList.Count);
-			}
-			catch (Exception ex)
-			{
-				result.Value = false;
-				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
-				_logger.WriteLogs();
-			}
-
-			return result;
-		}
-
-		public RetValue<Boolean> CompileSales()
-		{
-			var result = new RetValue<Boolean>();
-			try
-			{
-				var saveList = this.GetGameEntries(true);
-
-				_serializer.Save<List<GameEntry>>(saveList, @"completed\sales.json");
-
-				result.Value = true;
-				result.Description = String.Format("{0}", saveList.Count);
+				result.Description = String.Format("All: {0} | sales: {1}", allgameList.Count, salesList.Count);
 			}
 			catch (Exception ex)
 			{
@@ -122,6 +102,7 @@ namespace GetByNameLibrary.Controllers
 		protected List<GameEntry> GetGameEntries(Boolean IsSale)
 		{
 			var result = new List<GameEntry>();
+
 			_stores.ForEach((store) =>
 			{
 				result.AddRange(_serializer.Load<List<GameEntry>>(@"incompleted\" + store.FileName + @".json"));
@@ -130,9 +111,7 @@ namespace GetByNameLibrary.Controllers
 			if (IsSale)
 				result = result.Where(ent => ent.Sale == true).ToList();
 
-			result = result.OrderBy(ent => ent.SearchString).ToList();
-
-			return result;
+			return result.OrderBy(ent => ent.SearchString).ToList();
 		}
 	}
 }

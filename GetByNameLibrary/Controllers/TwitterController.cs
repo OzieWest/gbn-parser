@@ -26,12 +26,7 @@ namespace GetByNameLibrary.Controllers
 
 		public RetValue<Boolean> Compile()
 		{
-			var result = _twitterParser.StartParser();
-
-			if (result.Value)
-				result.Description = "Count: " + _twitterParser.GetEntries().Count.ToString();
-
-			return result;
+			return _twitterParser.StartParser();
 		}
 	}
 }

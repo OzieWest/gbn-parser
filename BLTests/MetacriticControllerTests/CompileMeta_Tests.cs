@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BLTests.StoreControllerTests
+namespace BLTests.MetacriticControllerTests
 {
 	[TestClass]
-	public class Compile : StoreControllerSpecification
+	public class CompileMeta_Tests : MetacriticControllerSpecification
 	{
 		[TestInitialize]
 		public void Given()
@@ -13,7 +13,7 @@ namespace BLTests.StoreControllerTests
 		}
 
 		[TestMethod]
-		public void When_CompileGames_Expect_Return_True()
+		public void When_CompileMeta_Expect_Return_True()
 		{
 			//arrange
 

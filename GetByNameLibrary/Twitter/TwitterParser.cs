@@ -39,6 +39,7 @@ namespace GetByNameLibrary.Twitter
 				{
 					this.SaveEntries();
 					result.Value = true;
+					result.Description = "Count: " + _entries.Count.ToString();
 				}
 				else
 				{

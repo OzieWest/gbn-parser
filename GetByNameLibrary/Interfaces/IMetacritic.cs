@@ -1,5 +1,4 @@
 ﻿using GetByNameLibrary.Domains;
-using GetByNameLibrary.Utilities;
 using SerializeLibra;
 using SimpleLogger;
 using System;
@@ -10,11 +9,14 @@ using System.Threading.Tasks;
 
 namespace GetByNameLibrary.Interfaces
 {
-	public interface ITwitter : IParser<TwitterEntry>
+	public interface IMetacritic : IParser<MetaEntry>
 	{
-		int EntriesCount { get; set; }
+		String SiteUrl { get; set; }
+		String ParseUrl { get; set; }
+		String FileName { get; set; }
 
 		ISerializer Serializer { get; set; }
+		IWebDownloader WebDownloader { get; set; }
 		TxtLogger Logger { get; set; }
 	}
 }

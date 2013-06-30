@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace GetByNameLibrary.Interfaces
 {
-	public interface IStoreController
+	public interface IStoreController : ICompile
 	{
 		AnswerStack<String> StartParse();
-
-		RetValue<Boolean> CompileSales();
-		RetValue<Boolean> CompileGames();
 	}
 }
