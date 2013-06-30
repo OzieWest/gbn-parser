@@ -1,4 +1,5 @@
 ﻿using GetByNameLibrary.Controllers;
+using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Twitter;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace BLTests.TwitterControllerTests
 {
 	public class TwitterControllerSpecification
 	{
-		protected TwitterController target;
+		protected ICompile target;
 
 		public TwitterControllerSpecification()
 		{

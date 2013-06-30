@@ -1,6 +1,7 @@
 ﻿using GetByNameLibrary.Domains;
 using GetByNameLibrary.Utilities;
 using HtmlAgilityPack;
+using ReturnValues;
 using SimpleLogger;
 using System;
 
@@ -8,10 +9,6 @@ namespace GetByNameLibrary.Stores
 {
 	public class Shop1c : BaseStore
 	{
-		public Shop1c()
-		{
-			_logger = new TxtLogger(@"logs\" + FileName + ".logs", true);
-		}
 		public override RetValue<Boolean> StartParse()
 		{
 			var result = new RetValue<Boolean>();
@@ -27,7 +24,7 @@ namespace GetByNameLibrary.Stores
 			{
 				result.Value = false;
 				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.Error(ex.ToString());
 				_logger.WriteLogs();
 			}
 

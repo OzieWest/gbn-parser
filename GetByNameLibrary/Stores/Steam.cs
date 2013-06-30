@@ -6,16 +6,12 @@ using System.Linq;
 using GetByNameLibrary.Domains;
 using SimpleLogger;
 using GetByNameLibrary.Utilities;
+using ReturnValues;
 
 namespace GetByNameLibrary.Stores
 {
 	public class Steam : BaseStore
 	{
-		public Steam()
-		{
-			_logger = new TxtLogger(@"logs\" + FileName + ".logs", true);
-		}
-
 		public override RetValue<Boolean> StartParse()
 		{
 			var result = new RetValue<Boolean>();
@@ -60,7 +56,7 @@ namespace GetByNameLibrary.Stores
 			{
 				result.Value = false;
 				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.Error(ex.ToString());
 				_logger.WriteLogs();
 			}
 

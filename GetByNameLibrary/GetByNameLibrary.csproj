@@ -39,11 +39,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\TweetSharp.2.3.1\lib\4.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="ReturnValues">
+      <HintPath>..\..\lib\RetValue\ReturnValues.dll</HintPath>
+    </Reference>
     <Reference Include="SerializeLibra">
       <HintPath>..\..\lib\serializer\SerializeLibra.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleLogger">
-      <HintPath>..\..\..\..\..\..\..\_Projects\lib\logger\SimpleLogger.dll</HintPath>
+    <Reference Include="SimpleLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\logger\SimpleLogger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -94,7 +98,6 @@
     <Compile Include="Twitter\TwitterParser.cs" />
     <Compile Include="Utilities\FTPUploader.cs" />
     <Compile Include="Utilities\Replacer.cs" />
-    <Compile Include="Utilities\RetValue.cs" />
     <Compile Include="Utilities\AnswerStack.cs" />
     <Compile Include="Utilities\WebDownloader.cs" />
   </ItemGroup>

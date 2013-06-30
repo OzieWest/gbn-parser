@@ -2,6 +2,7 @@
 using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Utilities;
 using HtmlAgilityPack;
+using ReturnValues;
 using SerializeLibra;
 using SimpleLogger;
 using System;
@@ -20,7 +21,7 @@ namespace GetByNameLibrary.Metacritic
 		[ScriptIgnore]
 		public ISerializer Serializer { get; set; }
 		[ScriptIgnore]
-		public TxtLogger Logger { get; set; } 
+		public ILogger Logger { get; set; } 
 
 		public String SiteUrl { get; set; }
 		public String ParseUrl { get; set; }
@@ -57,7 +58,7 @@ namespace GetByNameLibrary.Metacritic
 			{
 				result.Value = false;
 				result.Description = ex.Message;
-				Logger.AddEntry(ex.ToString(), MessageType.Error);
+				Logger.Error(ex.ToString());
 				Logger.WriteLogs();
 			}
 

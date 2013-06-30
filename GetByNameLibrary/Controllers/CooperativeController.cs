@@ -1,6 +1,7 @@
 ﻿using GetByNameLibrary.Cooperatives;
 using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Utilities;
+using ReturnValues;
 using SerializeLibra;
 using SimpleLogger;
 using System;
@@ -15,12 +16,12 @@ namespace ConsoleParser.Cooperative
 	{
 		ICooperative _cooperativeParser;
 		ISerializer _serializer;
-		TxtLogger _logger;
+		ILogger _logger;
 
 		public CooperativeController()
 		{
 			_serializer = new JsonSerializer();
-			_logger = new TxtLogger(@"logs\" + DateTime.Today.ToShortDateString() + ".logs");
+			_logger = new TxtLogger() { FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs" };
 
 			_cooperativeParser = this.LoadConfig();
 			_cooperativeParser.WebDownloader = new WebDownloader();

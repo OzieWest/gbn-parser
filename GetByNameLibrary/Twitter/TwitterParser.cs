@@ -1,6 +1,7 @@
 ﻿using GetByNameLibrary.Domains;
 using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Utilities;
+using ReturnValues;
 using SerializeLibra;
 using SimpleLogger;
 using System;
@@ -16,7 +17,7 @@ namespace GetByNameLibrary.Twitter
 	{
 		public int EntriesCount { get; set; }
 		public ISerializer Serializer { get; set; }
-		public TxtLogger Logger { get; set; }
+		public ILogger Logger { get; set; }
 
 		List<TwitterEntry> _entries;
 
@@ -51,7 +52,7 @@ namespace GetByNameLibrary.Twitter
 			{
 				result.Value = false;
 				result.Description = ex.Message;
-				Logger.AddEntry(ex.ToString(), MessageType.Error);
+				Logger.Error(ex.ToString());
 				Logger.WriteLogs();
 			}
 			return result;

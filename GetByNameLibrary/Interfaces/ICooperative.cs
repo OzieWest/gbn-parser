@@ -18,6 +18,6 @@ namespace GetByNameLibrary.Interfaces
 
 		ISerializer Serializer { get; set; }
 		IWebDownloader WebDownloader { get; set; }
-		TxtLogger Logger { get; set; }
+		ILogger Logger { get; set; }
 	}
 }

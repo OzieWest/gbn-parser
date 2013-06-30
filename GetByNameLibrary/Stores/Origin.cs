@@ -1,6 +1,7 @@
 ﻿using GetByNameLibrary.Domains;
 using GetByNameLibrary.Utilities;
 using HtmlAgilityPack;
+using ReturnValues;
 using SimpleLogger;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,6 @@ namespace GetByNameLibrary.Stores
 {
 	public class Origin : BaseStore
 	{
-		public Origin()
-		{
-			_logger = new TxtLogger(@"logs\" + FileName + ".logs", true);
-		}
-
 		public override RetValue<Boolean> StartParse()
 		{
 			var result = new RetValue<Boolean>();
@@ -47,7 +43,7 @@ namespace GetByNameLibrary.Stores
 			{
 				result.Value = false;
 				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.Error(ex.ToString());
 				_logger.WriteLogs();
 			}
 

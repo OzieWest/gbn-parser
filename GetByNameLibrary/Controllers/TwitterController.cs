@@ -1,6 +1,7 @@
 ﻿using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Twitter;
 using GetByNameLibrary.Utilities;
+using ReturnValues;
 using SerializeLibra;
 using SimpleLogger;
 using System;
@@ -20,7 +21,7 @@ namespace GetByNameLibrary.Controllers
 		{
 			_twitterParser = new TwitterParser();
 			_twitterParser.Serializer = new JsonSerializer();
-			_twitterParser.Logger = new TxtLogger(@"logs\" + DateTime.Today.ToShortDateString() + ".logs", true);
+			_twitterParser.Logger = new TxtLogger() { FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs" };
 			_twitterParser.EntriesCount = 10;
 		}
 

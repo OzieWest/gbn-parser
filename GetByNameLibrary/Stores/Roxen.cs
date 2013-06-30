@@ -7,11 +7,6 @@ namespace GetByNameLibrary.Stores
 {
 	public class Roxen : BaseStore
 	{
-		public Roxen()
-		{
-			_logger = new TxtLogger(@"logs\" + FileName + ".logs", true);
-		}
-
 		protected override void Parse(String page)
 		{
 			var doc = new HtmlDocument();

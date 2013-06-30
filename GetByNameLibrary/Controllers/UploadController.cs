@@ -1,6 +1,7 @@
 ﻿using GetByNameLibrary.Domains;
 using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Utilities;
+using ReturnValues;
 using SimpleLogger;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,13 @@ namespace GetByNameLibrary.Controllers
 		List<UploadTask> _tasks;
 
 		FTPUploader _ftpUploader;
-		TxtLogger _logger;
+		ILogger _logger;
 
 		public UploadController()
 		{
 			_ftpUploader = new FTPUploader();
-			_logger = new TxtLogger(@"logs\uploadController.logs");
-	
+			_logger = new TxtLogger() { FileName = @"logs\uploadController.logs" };
+
 			_tasks = new List<UploadTask>();
 		}
 
@@ -30,7 +31,7 @@ namespace GetByNameLibrary.Controllers
 			_tasks.Add(task);
 		}
 
-		protected String UploadTask(UploadTask task)
+		String UploadTask(UploadTask task)
 		{
 			return _ftpUploader.Upload(task);
 		}
@@ -46,7 +47,7 @@ namespace GetByNameLibrary.Controllers
 			catch (Exception ex)
 			{
 				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.Error(ex.ToString());
 				_logger.WriteLogs();
 			}
 

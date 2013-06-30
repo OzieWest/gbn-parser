@@ -2,6 +2,7 @@
 using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Utilities;
 using HtmlAgilityPack;
+using ReturnValues;
 using SerializeLibra;
 using SimpleLogger;
 using System;
@@ -23,7 +24,7 @@ namespace GetByNameLibrary.Cooperatives
 		[ScriptIgnore]
 		public IWebDownloader WebDownloader { get; set; }
 		[ScriptIgnore]
-		public TxtLogger Logger { get; set; }
+		public ILogger Logger { get; set; }
 
 		List<CoopEntry> _entries;
 
@@ -67,7 +68,7 @@ namespace GetByNameLibrary.Cooperatives
 			{
 				result.Value = false;
 				result.Description = ex.Message;
-				Logger.AddEntry(ex.ToString(), MessageType.Error);
+				Logger.Error(ex.ToString());
 				Logger.WriteLogs();
 			}
 

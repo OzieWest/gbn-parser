@@ -15,6 +15,6 @@ namespace GetByNameLibrary.Interfaces
 		int EntriesCount { get; set; }
 
 		ISerializer Serializer { get; set; }
-		TxtLogger Logger { get; set; }
+		ILogger Logger { get; set; }
 	}
 }

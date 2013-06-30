@@ -2,6 +2,7 @@
 using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Stores;
 using GetByNameLibrary.Utilities;
+using ReturnValues;
 using SerializeLibra;
 using SimpleLogger;
 using System;
@@ -16,14 +17,15 @@ namespace GetByNameLibrary.Controllers
 {
 	public class StoreController : IStoreController
 	{
-		JsonSerializer _serializer;
+		ILogger _logger;
+		ISerializer _serializer;
+
 		List<BaseStore> _stores;
-		TxtLogger _logger;
 
 		public StoreController()
 		{
 			_serializer = new JsonSerializer();
-			_logger = new TxtLogger(@"logs\storeController.logs");
+			_logger = new TxtLogger() { FileName = @"logs\storeController.logs" };
 
 			_stores = new List<BaseStore>();
 			_stores = this.LoadStores().Value;
@@ -64,7 +66,7 @@ namespace GetByNameLibrary.Controllers
 			{
 				result.Value = false;
 				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.Error(ex.ToString());
 				_logger.WriteLogs();
 			}
 
@@ -92,7 +94,7 @@ namespace GetByNameLibrary.Controllers
 			catch (Exception ex)
 			{
 				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.Error(ex.ToString());
 				_logger.WriteLogs();
 			}
 
@@ -107,7 +109,7 @@ namespace GetByNameLibrary.Controllers
 			{
 				result.AddRange(_serializer.Load<List<GameEntry>>(@"incompleted\" + store.FileName + @".json"));
 			});
-			
+
 			if (IsSale)
 				result = result.Where(ent => ent.Sale == true).ToList();
 

@@ -1,6 +1,7 @@
 ﻿using GetByNameLibrary.Domains;
 using GetByNameLibrary.Interfaces;
 using GetByNameLibrary.Utilities;
+using ReturnValues;
 using SerializeLibra;
 using SimpleLogger;
 using System;
@@ -26,7 +27,7 @@ namespace GetByNameLibrary.Stores
 		protected IReplacer _replacer;
 		protected IWebDownloader _webDownloader;
 		protected ISerializer _serializer;
-		protected TxtLogger _logger;
+		protected ILogger _logger;
 
 		//TODO: FileName используется раньше чем присваивается
 		public BaseStore()
@@ -34,6 +35,9 @@ namespace GetByNameLibrary.Stores
 			_replacer = new Replacer();
 			_webDownloader = new WebDownloader();
 			_serializer = new JsonSerializer();
+
+			_logger = new TxtLogger();
+			_logger.FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs";
 
 			_entries = new List<GameEntry>();
 		}
@@ -60,7 +64,7 @@ namespace GetByNameLibrary.Stores
 			{
 				result.Value = false;
 				result.Description = ex.Message;
-				_logger.AddEntry(ex.ToString(), MessageType.Error);
+				_logger.Error(ex.ToString());
 				_logger.WriteLogs();
 			}
 

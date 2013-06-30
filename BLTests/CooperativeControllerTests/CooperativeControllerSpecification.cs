@@ -1,4 +1,5 @@
 ﻿using ConsoleParser.Cooperative;
+using GetByNameLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace BLTests.CooperativeControllerTests
 {
 	public class CooperativeControllerSpecification
 	{
-		protected CooperativeController target;
+		protected ICompile target;
 
 		public CooperativeControllerSpecification()
 		{

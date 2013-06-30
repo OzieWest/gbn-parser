@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetByNameLibrary.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace BLTests.StoreControllerTests
 {
 	public class StoreControllerSpecification
 	{
-		protected StoreControllerForTests target;
+		protected IStoreController target;
 
 		public StoreControllerSpecification()
 		{
