@@ -21,7 +21,7 @@ namespace GetByNameLibrary.Controllers
 		public UploadController()
 		{
 			_ftpUploader = new FTPUploader();
-			_logger = new TxtLogger() { FileName = @"logs\uploadController.logs" };
+			_logger = new TxtLogger() { FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs" };
 
 			_tasks = new List<UploadTask>();
 		}

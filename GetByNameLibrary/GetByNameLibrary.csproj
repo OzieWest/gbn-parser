@@ -39,15 +39,17 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\TweetSharp.2.3.1\lib\4.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="ReturnValues">
-      <HintPath>..\..\lib\RetValue\ReturnValues.dll</HintPath>
+    <Reference Include="ReturnValues, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReturnValues.dll</HintPath>
     </Reference>
-    <Reference Include="SerializeLibra">
-      <HintPath>..\..\lib\serializer\SerializeLibra.dll</HintPath>
+    <Reference Include="SerializeLibra, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SerializeLibra.dll</HintPath>
     </Reference>
     <Reference Include="SimpleLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\logger\SimpleLogger.dll</HintPath>
+      <HintPath>..\..\lib\SimpleLogger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

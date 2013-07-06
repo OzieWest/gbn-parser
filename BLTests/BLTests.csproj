@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ReturnValues">
-      <HintPath>..\..\lib\RetValue\ReturnValues.dll</HintPath>
+      <HintPath>..\..\lib\ReturnValues.dll</HintPath>
     </Reference>
     <Reference Include="SerializeLibra, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -66,8 +66,11 @@
     <Compile Include="StoreControllerTests\StartParse_Tests.cs" />
     <Compile Include="StoreControllerTests\StoreControllerForTests.cs" />
     <Compile Include="StoreControllerTests\StoreControllerSpecification.cs" />
+    <Compile Include="StoreControllerTests\ParseThis_Tests.cs" />
     <Compile Include="TwitterControllerTests\TwitterControllerSpecification.cs" />
     <Compile Include="TwitterControllerTests\CompileTweets_Test.cs" />
+    <Compile Include="UploadControllerTests\UploadTests.cs" />
+    <Compile Include="UploadControllerTests\UploadControllerSpecification.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GetByNameLibrary\GetByNameLibrary.csproj">

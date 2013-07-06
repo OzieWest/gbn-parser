@@ -16,7 +16,6 @@ namespace BLTests.StoreControllerTests
 			//
 		}
 
-		[Ignore]
 		[TestMethod]
 		public void Expect_Return_CorrectValue()
 		{

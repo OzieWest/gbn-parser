@@ -48,7 +48,7 @@ namespace GetByNameLibrary.Utilities
 			ftpStream.Close();
 			ftpRequest = null;
 
-			return String.Format("{0} | {1}", task.Name);
+			return String.Format("{0}", task.Name);
 		}
 	}
 }

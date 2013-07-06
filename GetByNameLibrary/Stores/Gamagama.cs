@@ -42,6 +42,9 @@ namespace GetByNameLibrary.Stores
 							cost = node.SelectSingleNode(".//div[@class='price_1']//b").InnerText;
 					}
 
+					if (cost == "бесплатно")
+						break;
+
 					_entries.Add(new GameEntry()
 					{
 						SearchString = searchString,

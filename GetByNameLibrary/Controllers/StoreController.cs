@@ -25,7 +25,7 @@ namespace GetByNameLibrary.Controllers
 		public StoreController()
 		{
 			_serializer = new JsonSerializer();
-			_logger = new TxtLogger() { FileName = @"logs\storeController.logs" };
+			_logger = new TxtLogger() { FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs" };
 
 			_stores = new List<BaseStore>();
 			_stores = this.LoadStores().Value;
@@ -39,11 +39,34 @@ namespace GetByNameLibrary.Controllers
 			{
 				var thread = new Thread(delegate()
 				{
-					var answer = String.Format("{0}|{1}|{2}", store.FileName, store.StartParse(), store.GetEntries().Count);
+					var retValue = store.StartParse();
+					var answer = String.Format("{0} | {1} | {2}", store.FileName, retValue.Value, retValue.Description);
 					result.Push(answer);
 				}) { Name = store.FileName };
 				thread.Start();
 			});
+
+			return result;
+		}
+
+		public RetValue<Boolean> ParseThis(String parserName)
+		{
+			var result = new RetValue<Boolean>();
+
+			var store = _stores.SingleOrDefault(o => o.FileName == parserName);
+
+			if (store != null)
+			{
+				var retValue = store.StartParse();
+
+				result.Value = retValue.Value;
+				result.Description = String.Format("{0} | {1} | {2}", store.FileName, retValue.Value, retValue.Description);
+			}
+			else
+			{
+				result.Value = false;
+				result.Description = String.Format("{0} не найден", parserName);
+			}
 
 			return result;
 		}
