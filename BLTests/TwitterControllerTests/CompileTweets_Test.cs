@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GetByNameLibrary.Utilities;
 using ReturnValues;
+using System.Diagnostics;
 
 namespace BLTests.TwitterControllerTests
 {
@@ -17,15 +18,20 @@ namespace BLTests.TwitterControllerTests
 		[TestMethod]
 		public void When_CompileTweets_Expect_Return_True()
 		{
-			//arrange
+			Debug.WriteLine("Compile: Start");
 
 			//act
-			var result = RunTestMethod();
+			var result = target.AsyncCompile(() => { Debug.WriteLine("Compile: End"); });
+
+			while (!result.IsComplete())
+			{
+				var item = result.IsComplete();
+				var prog = result.GetProgress();
+				Debug.WriteLine("Compile: " + prog);
+			}
 
 			//assert
 			Assert.IsTrue(result.Value);
 		}
-
-		RetValue<Boolean> RunTestMethod() { return target.Compile(); }
 	}
 }

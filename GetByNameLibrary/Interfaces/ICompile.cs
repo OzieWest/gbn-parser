@@ -10,6 +10,6 @@ namespace GetByNameLibrary.Interfaces
 {
 	public interface ICompile
 	{
-		RetValue<Boolean> Compile();
+		AsyncRetValue<Boolean> AsyncCompile(Action method);
 	}
 }

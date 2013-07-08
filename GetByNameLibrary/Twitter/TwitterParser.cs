@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TweetSharp;
 
@@ -31,30 +32,40 @@ namespace GetByNameLibrary.Twitter
 			return _entries;
 		}
 
-		public RetValue<Boolean> StartParser()
+		public AsyncRetValue<Boolean> AsyncStartParse(Action method)
 		{
-			var result = new RetValue<Boolean>();
-			try
+			var result = new AsyncRetValue<Boolean>();
+			result.SetProgressRange(0, 1);
+			result.SetWorker(() =>
 			{
-				if (this.GrabTimeLine())
+				try
 				{
-					this.SaveEntries();
-					result.Value = true;
-					result.Description = "Count: " + _entries.Count.ToString();
+					if (this.GrabTimeLine())
+					{
+						this.SaveEntries();
+						result.Value = true;
+						result.Description = "Count: " + _entries.Count.ToString();
+					}
+					else
+					{
+						result.Value = false;
+						result.Description = "method |GrabTimeLine| return false";
+					}
+
+					result.Complete();
 				}
-				else
+				catch (Exception ex)
 				{
-					result.Value = false;
-					result.Description = "method |GrabTimeLine| return false";
+					result.AbortProgress(false, ex.Message);
+
+					Logger.Error(ex.ToString());
+					Logger.WriteLogs();
 				}
-			}
-			catch (Exception ex)
-			{
-				result.Value = false;
-				result.Description = ex.Message;
-				Logger.Error(ex.ToString());
-				Logger.WriteLogs();
-			}
+			});
+
+			result.OnComplete(method);
+			result.StartWork();
+			
 			return result;
 		}
 

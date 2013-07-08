@@ -8,13 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleParser.Cooperative
 {
 	public class CooperativeController : ICompile
 	{
-		ICooperative _cooperativeParser;
+		CooperativeParser _cooperativeParser;
 		ISerializer _serializer;
 		ILogger _logger;
 
@@ -29,9 +30,9 @@ namespace ConsoleParser.Cooperative
 			_cooperativeParser.Logger = _logger;
 		}
 
-		public RetValue<Boolean> Compile()
+		public AsyncRetValue<Boolean> AsyncCompile(Action method)
 		{
-			return _cooperativeParser.StartParser();
+			return _cooperativeParser.AsyncStartParse(method);
 		}
 
 		CooperativeParser LoadConfig()

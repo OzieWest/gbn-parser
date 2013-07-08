@@ -30,9 +30,9 @@ namespace GetByNameLibrary.Controllers
 			_metacriticParser.WebDownloader = new WebDownloader();
 		}
 
-		public RetValue<Boolean> Compile()
+		public AsyncRetValue<Boolean> AsyncCompile(Action method)
 		{
-			return _metacriticParser.StartParser();
+			return _metacriticParser.AsyncStartParse(method);
 		}
 
 		MetacriticParser LoadConfig()

@@ -71,27 +71,36 @@ namespace GetByNameLibrary.Controllers
 			return result;
 		}
 
-		public RetValue<Boolean> Compile()
+		public AsyncRetValue<Boolean> AsyncCompile(Action method)
 		{
-			var result = new RetValue<Boolean>();
-			try
-			{
-				var allgameList = this.GetGameEntries(false);
-				_serializer.Save<List<GameEntry>>(allgameList, @"completed\games.json");
+			var result = new AsyncRetValue<Boolean>();
+			result.SetProgressRange(0, 1);
 
-				var salesList = this.GetGameEntries(true);
-				_serializer.Save<List<GameEntry>>(salesList, @"completed\sales.json");
-
-				result.Value = true;
-				result.Description = String.Format("All: {0} | sales: {1}", allgameList.Count, salesList.Count);
-			}
-			catch (Exception ex)
+			result.SetWorker(() =>
 			{
-				result.Value = false;
-				result.Description = ex.Message;
-				_logger.Error(ex.ToString());
-				_logger.WriteLogs();
-			}
+				try
+				{
+					var allgameList = this.GetGameEntries(false);
+					_serializer.Save<List<GameEntry>>(allgameList, @"completed\games.json");
+
+					var salesList = this.GetGameEntries(true);
+					_serializer.Save<List<GameEntry>>(salesList, @"completed\sales.json");
+
+					result.Value = true;
+					result.Description = String.Format("All: {0} | sales: {1}", allgameList.Count, salesList.Count);
+					result.Complete();
+				}
+				catch (Exception ex)
+				{
+					result.AbortProgress(false, ex.Message);
+
+					_logger.Error(ex.ToString());
+					_logger.WriteLogs();
+				}
+			});
+
+			result.OnComplete(method);
+			result.StartWork();
 
 			return result;
 		}

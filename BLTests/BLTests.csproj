@@ -35,7 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ReturnValues">
+    <Reference Include="ReturnValues, Version=1.0.4936.28044, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\ReturnValues.dll</HintPath>
     </Reference>
     <Reference Include="SerializeLibra, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

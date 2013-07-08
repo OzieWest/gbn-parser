@@ -25,9 +25,9 @@ namespace GetByNameLibrary.Controllers
 			_twitterParser.EntriesCount = 10;
 		}
 
-		public RetValue<Boolean> Compile()
+		public AsyncRetValue<Boolean> AsyncCompile(Action method)
 		{
-			return _twitterParser.StartParser();
+			return _twitterParser.AsyncStartParse(method);
 		}
 	}
 }

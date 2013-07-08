@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
@@ -21,7 +22,7 @@ namespace GetByNameLibrary.Metacritic
 		[ScriptIgnore]
 		public ISerializer Serializer { get; set; }
 		[ScriptIgnore]
-		public ILogger Logger { get; set; } 
+		public ILogger Logger { get; set; }
 
 		public String SiteUrl { get; set; }
 		public String ParseUrl { get; set; }
@@ -39,28 +40,41 @@ namespace GetByNameLibrary.Metacritic
 			return _entries;
 		}
 
-		public RetValue<Boolean> StartParser()
+		public AsyncRetValue<Boolean> AsyncStartParse(Action method)
 		{
 			int Count = 2;
 
-			var result = new RetValue<Boolean>();
-			try
-			{
-				for (int i = 0; i < Count; i++)
-					this.Parse(this.GetPage(ParseUrl + i.ToString()));
+			var result = new AsyncRetValue<Boolean>();
+			result.SetProgressRange(0, Count);
 
-				this.SaveEntries();
-
-				result.Value = true;
-				result.Description = String.Format("count: {0}", _entries.Count);
-			}
-			catch (Exception ex)
+			result.SetWorker(() =>
 			{
-				result.Value = false;
-				result.Description = ex.Message;
-				Logger.Error(ex.ToString());
-				Logger.WriteLogs();
-			}
+				try
+				{
+					for (int i = 0; i < Count; i++)
+					{
+						this.Parse(this.GetPage(ParseUrl + i.ToString()));
+						result.MoveProgress(i);
+					}
+
+					this.SaveEntries();
+
+					result.Value = true;
+					result.Description = String.Format("count: {0}", _entries.Count);
+					result.Complete();
+				}
+				catch (Exception ex)
+				{
+					result.AbortProgress(false, ex.Message);
+
+					Logger.Error(ex.ToString());
+					Logger.WriteLogs();
+				}
+			});
+
+			result.OnComplete(method);
+
+			result.StartWork();
 
 			return result;
 		}

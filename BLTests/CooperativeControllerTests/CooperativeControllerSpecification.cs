@@ -10,7 +10,7 @@ namespace BLTests.CooperativeControllerTests
 {
 	public class CooperativeControllerSpecification
 	{
-		protected ICompile target;
+		protected CooperativeController target;
 
 		public CooperativeControllerSpecification()
 		{

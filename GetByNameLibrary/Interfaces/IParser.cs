@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace GetByNameLibrary.Interfaces
 {
-	public interface IParser<T> where T: class
+	public interface IParser<T> where T : class
 	{
 		List<T> GetEntries();
-		RetValue<Boolean> StartParser();
+		AsyncRetValue<Boolean> AsyncStartParse(Action method);
 	}
 }
