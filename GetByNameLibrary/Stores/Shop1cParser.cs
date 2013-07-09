@@ -7,31 +7,41 @@ using System;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Shop1c : BaseStore
+	public class Shop1cParser : BaseStoreParser
 	{
-		public override RetValue<Boolean> StartParse()
+		public override AsyncRetValue<Boolean> AsyncStartParse(Action<AsyncRetValue<Boolean>> method)
 		{
-			var result = new RetValue<Boolean>();
-			try
-			{
-				this.Parse(GetPage(PageUrl));
-				this.SaveEntries();
+			var result = new AsyncRetValue<Boolean>();
+			result.SetProgressRange(0, 1);
 
-				result.Value = true;
-				result.Description = String.Format("{0}", _entries.Count);
-			}
-			catch (Exception ex)
+			result.SetWorker(() =>
 			{
-				result.Value = false;
-				result.Description = ex.Message;
-				_logger.Error(ex.ToString());
-				_logger.WriteLogs();
-			}
+				try
+				{
+					this.Parse(this.GetPage(PageUrl));
+					this.SaveEntries();
+
+					result.Value = true;
+					result.Description = String.Format("{0}", _entries.Count);
+				}
+				catch (Exception ex)
+				{
+					result.AbortProgress(false, ex.Message);
+
+					_logger.Error(ex.ToString());
+					_logger.WriteLogs();
+				}
+
+				result.Complete();
+			});
+
+			result.OnComplete(method);
+			result.StartWork();
 
 			return result;
 		}
 
-		protected override void Parse(string page)
+		protected override void Parse(String page)
 		{
 			var doc = new HtmlDocument();
 			doc.LoadHtml(page);

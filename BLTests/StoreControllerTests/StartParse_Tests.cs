@@ -4,12 +4,15 @@ using GetByNameLibrary.Controllers;
 using System.Collections.Generic;
 using GetByNameLibrary.Utilities;
 using System.Diagnostics;
+using ReturnValues;
 
 namespace BLTests.StoreControllerTests
 {
 	[TestClass]
 	public class StartParse_Tests : StoreControllerSpecification
 	{
+		int count;
+
 		[TestInitialize]
 		public void Given()
 		{
@@ -20,21 +23,24 @@ namespace BLTests.StoreControllerTests
 		public void Expect_Return_CorrectValue()
 		{
 			//arrange
-			var assertList = new List<String>();
+			var result = new List<AsyncRetValue<Boolean>>();
 
 			//act
-			var result = RunTestMethod();
-			while (!result.isEnded())
-			{
-				var answer = result.Pop();
-				if (answer != null)
-					assertList.Add(answer);
-			}
+			result = target.AsyncStartParse(PrintResult);
 
 			//assert
-			assertList.ForEach((answer) => { Assert.AreNotEqual(String.Empty, answer); });
+			while (count != result.Count)
+			{
+				//
+			}
+
+			result.ForEach((answer) => { Assert.IsTrue(answer.Value); });
 		}
 
-		AnswerStack<String> RunTestMethod() { return target.StartParse(); }
+		public void PrintResult(AsyncRetValue<Boolean> result)
+		{
+			Debug.WriteLine("{0}|{1}", result.Value, result.Description);
+			count++;
+		}
 	}
 }

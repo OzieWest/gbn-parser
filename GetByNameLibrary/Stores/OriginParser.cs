@@ -10,42 +10,58 @@ using System.Threading;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Origin : BaseStore
+	public class OriginParser : BaseStoreParser
 	{
-		public override RetValue<Boolean> StartParse()
+		public override AsyncRetValue<Boolean> AsyncStartParse(Action<AsyncRetValue<Boolean>> method)
 		{
-			var result = new RetValue<Boolean>();
-			try
+			var result = new AsyncRetValue<Boolean>();
+
+			result.SetWorker(() =>
 			{
-				var pages = new List<String>();
-
-				var tempDocs = new List<String>();
-
-				var doc = new HtmlDocument();
-				doc.LoadHtml(GetPage(PageUrl + "0"));
-
-				var nodes = doc.DocumentNode.SelectNodes("//div[@id='dr_totalSize']/select");
-				if (nodes != null)
+				try
 				{
-					foreach (var node in nodes.Elements("option"))
-						tempDocs.Add(PageUrl + node.GetAttributeValue("value", String.Empty));
+					var pages = new List<String>();
+
+					var tempDocs = new List<String>();
+
+					var doc = new HtmlDocument();
+					doc.LoadHtml(GetPage(PageUrl + "0"));
+
+					var nodes = doc.DocumentNode.SelectNodes("//div[@id='dr_totalSize']/select");
+					if (nodes != null)
+					{
+						var elements = nodes.Elements("option").ToList();
+						result.SetProgressRange(0, elements.Count);
+
+						for(var i = 0; i < elements.Count; i++)
+						{
+							var node = elements[i];
+							tempDocs.Add(PageUrl + node.GetAttributeValue("value", String.Empty));
+							result.MoveProgress(i);
+						}
+					}
+					tempDocs.Distinct().ToList().ForEach((item) => { pages.Add(this.GetPage(item)); });
+
+					pages.ForEach((item) => { this.Parse(item); });
+
+					this.SaveEntries();
+
+					result.Value = true;
+					result.Description = String.Format("{0}", _entries.Count);
 				}
-				tempDocs.Distinct().ToList().ForEach((item) => { pages.Add(GetPage(item)); });
+				catch (Exception ex)
+				{
+					result.AbortProgress(false, ex.Message);
 
-				pages.ForEach((item) => { this.Parse(item); });
+					_logger.Error(ex.ToString());
+					_logger.WriteLogs();
+				}
 
-				this.SaveEntries();
+				result.Complete();
+			});
 
-				result.Value = true;
-				result.Description = String.Format("{0}", _entries.Count);
-			}
-			catch (Exception ex)
-			{
-				result.Value = false;
-				result.Description = ex.Message;
-				_logger.Error(ex.ToString());
-				_logger.WriteLogs();
-			}
+			result.OnComplete(method);
+			result.StartWork();
 
 			return result;
 		}

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
+using ReturnValues;
 
 namespace BLTests.StoreControllerTests
 {
@@ -18,10 +20,21 @@ namespace BLTests.StoreControllerTests
 			//arrange
 
 			//act
-			var result = target.ParseThis("directcod");
+			var result = new AsyncRetValue<Boolean>();
+			result = target.AsyncParseThis("directcod", PrintResult);
+
+			while (!result.IsComplete())
+			{
+				//
+			}
 
 			//assert
 			Assert.IsTrue(result.Value);
+		}
+
+		public void PrintResult(AsyncRetValue<Boolean> result)
+		{
+			Debug.WriteLine("{0}|{1}", result.Value, result.Description);
 		}
 	}
 }

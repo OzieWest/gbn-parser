@@ -5,7 +5,7 @@ using System;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Gamagama : BaseStore
+	public class GamagamaParser : BaseStoreParser
 	{
 		protected override void Parse(String page)
 		{

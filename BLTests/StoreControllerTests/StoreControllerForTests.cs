@@ -12,7 +12,7 @@ namespace BLTests.StoreControllerTests
 {
 	public class StoreControllerForTests : StoreController
 	{
-		new public RetValue<List<BaseStore>> LoadStores()
+		new public RetValue<List<BaseStoreParser>> LoadStores()
 		{
 			return base.LoadStores();
 		}

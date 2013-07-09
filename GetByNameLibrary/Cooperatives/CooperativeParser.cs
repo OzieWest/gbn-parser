@@ -81,7 +81,6 @@ namespace GetByNameLibrary.Cooperatives
 
 					result.Value = true;
 					result.Description = String.Format("{0}", _entries.Count);
-					result.Complete();
 				}
 				catch (Exception ex)
 				{
@@ -90,6 +89,8 @@ namespace GetByNameLibrary.Cooperatives
 					Logger.Error(ex.ToString());
 					Logger.WriteLogs();
 				}
+
+				result.Complete();
 			});
 
 			result.OnComplete(method);

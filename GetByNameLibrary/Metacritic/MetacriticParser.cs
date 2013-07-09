@@ -61,7 +61,6 @@ namespace GetByNameLibrary.Metacritic
 
 					result.Value = true;
 					result.Description = String.Format("count: {0}", _entries.Count);
-					result.Complete();
 				}
 				catch (Exception ex)
 				{
@@ -70,6 +69,8 @@ namespace GetByNameLibrary.Metacritic
 					Logger.Error(ex.ToString());
 					Logger.WriteLogs();
 				}
+
+				result.Complete();
 			});
 
 			result.OnComplete(method);

@@ -5,7 +5,7 @@ using System;
 
 namespace GetByNameLibrary.Stores
 {
-	public class Roxen : BaseStore
+	public class RoxenParser : BaseStoreParser
 	{
 		protected override void Parse(String page)
 		{

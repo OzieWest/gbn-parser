@@ -20,52 +20,50 @@ namespace GetByNameLibrary.Controllers
 		ILogger _logger;
 		ISerializer _serializer;
 
-		List<BaseStore> _stores;
+		List<BaseStoreParser> _stores;
 
 		public StoreController()
 		{
 			_serializer = new JsonSerializer();
 			_logger = new TxtLogger() { FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs" };
 
-			_stores = new List<BaseStore>();
+			_stores = new List<BaseStoreParser>();
 			_stores = this.LoadStores().Value;
 		}
 
-		public AnswerStack<String> StartParse()
+		public List<AsyncRetValue<Boolean>> AsyncStartParse(Action<AsyncRetValue<Boolean>> method)
 		{
-			var result = new AnswerStack<String>(_stores.Count);
+			var result = new List<AsyncRetValue<Boolean>>();
 
 			_stores.ForEach((store) =>
 			{
-				var thread = new Thread(delegate()
-				{
-					var retValue = store.StartParse();
-					var answer = String.Format("{0} | {1} | {2}", store.FileName, retValue.Value, retValue.Description);
-					result.Push(answer);
-				}) { Name = store.FileName };
-				thread.Start();
+				var retValue = new AsyncRetValue<Boolean>();
+
+				retValue = store.AsyncStartParse(method);
+				result.Add(retValue);
 			});
 
 			return result;
 		}
 
-		public RetValue<Boolean> ParseThis(String parserName)
+		public AsyncRetValue<Boolean> AsyncParseThis(String parserName, Action<AsyncRetValue<Boolean>> method)
 		{
-			var result = new RetValue<Boolean>();
+			var result = new AsyncRetValue<Boolean>();
+			result.SetProgressRange(0, 1);
 
 			var store = _stores.SingleOrDefault(o => o.FileName == parserName);
 
 			if (store != null)
 			{
-				var retValue = store.StartParse();
-
-				result.Value = retValue.Value;
-				result.Description = String.Format("{0} | {1} | {2}", store.FileName, retValue.Value, retValue.Description);
+				var retValue = new AsyncRetValue<Boolean>();
+				result = store.AsyncStartParse(method);
 			}
 			else
 			{
 				result.Value = false;
 				result.Description = String.Format("{0} не найден", parserName);
+				result.OnComplete(method);
+				result.Complete();
 			}
 
 			return result;
@@ -105,23 +103,23 @@ namespace GetByNameLibrary.Controllers
 			return result;
 		}
 
-		protected RetValue<List<BaseStore>> LoadStores()
+		protected RetValue<List<BaseStoreParser>> LoadStores()
 		{
-			var result = new RetValue<List<BaseStore>>();
-			result.Value = new List<BaseStore>();
+			var result = new RetValue<List<BaseStoreParser>>();
+			result.Value = new List<BaseStoreParser>();
 			try
 			{
 				var serializer = new JsonSerializer();
 
-				result.Value.Add(serializer.Load<Directcod>(@"configs\directcod.config"));
-				result.Value.Add(serializer.Load<Steam>(@"configs\steam.config"));
-				result.Value.Add(serializer.Load<Yuplay>(@"configs\yuplay.config"));
-				result.Value.Add(serializer.Load<Origin>(@"configs\origin.config"));
-				result.Value.Add(serializer.Load<Roxen>(@"configs\roxen.config"));
-				result.Value.Add(serializer.Load<Gamagama>(@"configs\gamagama.config"));
-				result.Value.Add(serializer.Load<Gamazavr>(@"configs\gamazavr.config"));
-				result.Value.Add(serializer.Load<Igromagaz>(@"configs\igromagaz.config"));
-				result.Value.Add(serializer.Load<Shop1c>(@"configs\shop1c.config"));
+				result.Value.Add(serializer.Load<DirectcodParser>(@"configs\directcod.config"));
+				result.Value.Add(serializer.Load<SteamParser>(@"configs\steam.config"));
+				result.Value.Add(serializer.Load<YuplayParser>(@"configs\yuplay.config"));
+				result.Value.Add(serializer.Load<OriginParser>(@"configs\origin.config"));
+				result.Value.Add(serializer.Load<RoxenParser>(@"configs\roxen.config"));
+				result.Value.Add(serializer.Load<GamagamaParser>(@"configs\gamagama.config"));
+				result.Value.Add(serializer.Load<GamazavrParser>(@"configs\gamazavr.config"));
+				result.Value.Add(serializer.Load<IgromagazParser>(@"configs\igromagaz.config"));
+				result.Value.Add(serializer.Load<Shop1cParser>(@"configs\shop1c.config"));
 			}
 			catch (Exception ex)
 			{

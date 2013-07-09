@@ -52,7 +52,6 @@ namespace GetByNameLibrary.Twitter
 						result.Description = "method |GrabTimeLine| return false";
 					}
 
-					result.Complete();
 				}
 				catch (Exception ex)
 				{
@@ -61,6 +60,8 @@ namespace GetByNameLibrary.Twitter
 					Logger.Error(ex.ToString());
 					Logger.WriteLogs();
 				}
+
+				result.Complete();
 			});
 
 			result.OnComplete(method);

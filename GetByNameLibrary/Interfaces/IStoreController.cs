@@ -11,8 +11,8 @@ namespace GetByNameLibrary.Interfaces
 {
 	public interface IStoreController : ICompile
 	{
-		AnswerStack<String> StartParse();
+		List<AsyncRetValue<Boolean>> AsyncStartParse(Action<AsyncRetValue<Boolean>> method);
 
-		RetValue<Boolean> ParseThis(String parserName);
+		AsyncRetValue<Boolean> AsyncParseThis(String parserName, Action<AsyncRetValue<Boolean>> method);
 	}
 }
