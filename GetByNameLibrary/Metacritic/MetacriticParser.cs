@@ -71,7 +71,7 @@ namespace GetByNameLibrary.Metacritic
 				}
 
 				result.Complete();
-			});
+			}, "Metacritic");
 
 			result.OnComplete(method);
 

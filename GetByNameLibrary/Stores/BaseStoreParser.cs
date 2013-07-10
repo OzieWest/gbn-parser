@@ -75,7 +75,7 @@ namespace GetByNameLibrary.Stores
 				}
 
 				result.Complete();
-			});
+			}, FileName);
 
 			result.OnComplete(method);
 			result.StartWork();

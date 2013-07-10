@@ -91,7 +91,7 @@ namespace GetByNameLibrary.Cooperatives
 				}
 
 				result.Complete();
-			});
+			}, "Cooperative");
 
 			result.OnComplete(method);
 			result.StartWork();

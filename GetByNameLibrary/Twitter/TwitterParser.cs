@@ -62,7 +62,7 @@ namespace GetByNameLibrary.Twitter
 				}
 
 				result.Complete();
-			});
+			}, "Twitter");
 
 			result.OnComplete(method);
 			result.StartWork();

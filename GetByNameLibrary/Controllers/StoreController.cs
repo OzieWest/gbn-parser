@@ -95,7 +95,7 @@ namespace GetByNameLibrary.Controllers
 					_logger.Error(ex.ToString());
 					_logger.WriteLogs();
 				}
-			});
+			}, "Store compiler");
 
 			result.OnComplete(method);
 			result.StartWork();
