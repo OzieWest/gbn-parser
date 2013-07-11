@@ -1,14 +1,26 @@
 ﻿using System;
+using System.Runtime.Serialization;
 namespace GetByNameLibrary.Domains
 {
-    [Serializable]
-    public class CoopEntry
-    {
-        public String Name { get; set; }
-        public String Offline { get; set; }
-        public String Online { get; set; }
-        public String Lan { get; set; }
-        public String CoopMode { get; set; }
-        public String CoopComp { get; set; }
-    }
+	[DataContract]
+	public class CoopEntry
+	{
+		[DataMember]
+		public String Name { get; set; }
+
+		[DataMember]
+		public String Offline { get; set; }
+
+		[DataMember]
+		public String Online { get; set; }
+
+		[DataMember]
+		public String Lan { get; set; }
+
+		[DataMember]
+		public String CoopMode { get; set; }
+
+		[DataMember]
+		public String CoopComp { get; set; }
+	}
 }

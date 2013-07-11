@@ -1,14 +1,26 @@
 ﻿using System;
+using System.Runtime.Serialization;
 namespace GetByNameLibrary.Domains
 {
-    [Serializable]
-    public class GameEntry
-    {
-        public String SearchString { get; set; }
-        public String Title { get; set; }
-        public String GameUrl { get; set; }
-        public String StoreUrl { get; set; }
-        public String Cost { get; set; }
-        public Boolean Sale { get; set; }
-    }
+	[DataContract]
+	public class GameEntry
+	{
+		[DataMember]
+		public String SearchString { get; set; }
+
+		[DataMember]
+		public String Title { get; set; }
+
+		[DataMember]
+		public String GameUrl { get; set; }
+
+		[DataMember]
+		public String StoreUrl { get; set; }
+
+		[DataMember]
+		public String Cost { get; set; }
+
+		[DataMember]
+		public Boolean Sale { get; set; }
+	}
 }
