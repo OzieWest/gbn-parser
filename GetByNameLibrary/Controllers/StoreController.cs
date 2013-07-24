@@ -17,8 +17,8 @@ namespace GetByNameLibrary.Controllers
 {
 	public class StoreController : IStoreController
 	{
-		ILogger _logger;
-		ISerializer _serializer;
+		public ILogger _logger;
+		public ISerializer _serializer;
 
 		List<BaseStoreParser> _stores;
 

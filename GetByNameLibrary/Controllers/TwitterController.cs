@@ -15,7 +15,7 @@ namespace GetByNameLibrary.Controllers
 {
 	public class TwitterController : ICompile
 	{
-		ITwitter _twitterParser;
+		public ITwitter _twitterParser;
 
 		public TwitterController()
 		{

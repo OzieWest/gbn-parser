@@ -81,6 +81,7 @@
     <Compile Include="Interfaces\IReplacer.cs" />
     <Compile Include="Interfaces\IStoreController.cs" />
     <Compile Include="Interfaces\ICompile.cs" />
+    <Compile Include="Interfaces\IUploader.cs" />
     <Compile Include="Interfaces\IUploadController.cs" />
     <Compile Include="Interfaces\IWebDownloader.cs" />
     <Compile Include="Controllers\MetacriticController.cs" />

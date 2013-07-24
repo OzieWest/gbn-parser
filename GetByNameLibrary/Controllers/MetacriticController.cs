@@ -14,9 +14,9 @@ namespace GetByNameLibrary.Controllers
 {
 	public class MetacriticController: ICompile
 	{
-		IMetacritic _metacriticParser;
-		ISerializer _serializer;
-		ILogger _logger;
+		public IMetacritic _metacriticParser;
+		public ISerializer _serializer;
+		public ILogger _logger;
 
 		public MetacriticController()
 		{

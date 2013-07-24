@@ -15,8 +15,8 @@ namespace GetByNameLibrary.Controllers
 	{
 		List<UploadTask> _tasks;
 
-		FTPUploader _ftpUploader;
-		ILogger _logger;
+		public IUploader _ftpUploader;
+		public ILogger _logger;
 
 		public UploadController()
 		{

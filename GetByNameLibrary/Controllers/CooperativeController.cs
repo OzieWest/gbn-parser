@@ -15,9 +15,9 @@ namespace ConsoleParser.Cooperative
 {
 	public class CooperativeController : ICompile
 	{
-		CooperativeParser _cooperativeParser;
-		ISerializer _serializer;
-		ILogger _logger;
+		public CooperativeParser _cooperativeParser;
+		public ISerializer _serializer;
+		public ILogger _logger;
 
 		public CooperativeController()
 		{

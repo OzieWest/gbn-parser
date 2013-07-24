@@ -24,10 +24,10 @@ namespace GetByNameLibrary.Stores
 
 		protected List<GameEntry> _entries;
 
-		protected IReplacer _replacer;
-		protected IWebDownloader _webDownloader;
-		protected ISerializer _serializer;
-		protected ILogger _logger;
+		public IReplacer _replacer;
+		public IWebDownloader _webDownloader;
+		public ISerializer _serializer;
+		public ILogger _logger;
 
 		//TODO: Подключить Springframework
 		public BaseStoreParser()

@@ -1,4 +1,5 @@
 ﻿using GetByNameLibrary.Domains;
+using GetByNameLibrary.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GetByNameLibrary.Utilities
 {
-	public class FTPUploader
+	public class FTPUploader : IUploader
 	{
 		public String Host { get; set; }
 		public String Login { get; set; }
