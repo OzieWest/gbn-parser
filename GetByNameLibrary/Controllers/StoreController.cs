@@ -24,9 +24,6 @@ namespace GetByNameLibrary.Controllers
 
 		public StoreController()
 		{
-			_serializer = new JsonSerializer();
-			_logger = new TxtLogger() { FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs" };
-
 			_stores = new List<BaseStoreParser>();
 			_stores = this.LoadStores().Value;
 		}

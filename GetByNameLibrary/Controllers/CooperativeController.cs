@@ -21,13 +21,7 @@ namespace ConsoleParser.Cooperative
 
 		public CooperativeController()
 		{
-			_serializer = new JsonSerializer();
-			_logger = new TxtLogger() { FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs" };
-
 			_cooperativeParser = this.LoadConfig();
-			_cooperativeParser.WebDownloader = new WebDownloader();
-			_cooperativeParser.Serializer = _serializer;
-			_cooperativeParser.Logger = _logger;
 		}
 
 		public AsyncRetValue<Boolean> AsyncCompile(Action method)

@@ -20,14 +20,7 @@ namespace GetByNameLibrary.Controllers
 
 		public MetacriticController()
 		{
-			_serializer = new JsonSerializer();
-			_logger = new TxtLogger();
-			_logger.FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs";
-
 			_metacriticParser = this.LoadConfig();
-			_metacriticParser.Logger = _logger;
-			_metacriticParser.Serializer = _serializer;
-			_metacriticParser.WebDownloader = new WebDownloader();
 		}
 
 		public AsyncRetValue<Boolean> AsyncCompile(Action method)

@@ -29,16 +29,8 @@ namespace GetByNameLibrary.Stores
 		public ISerializer _serializer;
 		public ILogger _logger;
 
-		//TODO: Подключить Springframework
 		public BaseStoreParser()
 		{
-			_replacer = new Replacer();
-			_webDownloader = new WebDownloader();
-			_serializer = new JsonSerializer();
-
-			_logger = new TxtLogger();
-			_logger.FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs";
-
 			_entries = new List<GameEntry>();
 		}
 

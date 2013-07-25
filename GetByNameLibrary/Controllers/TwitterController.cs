@@ -19,10 +19,10 @@ namespace GetByNameLibrary.Controllers
 
 		public TwitterController()
 		{
-			_twitterParser = new TwitterParser();
-			_twitterParser.Serializer = new JsonSerializer();
-			_twitterParser.Logger = new TxtLogger() { FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs" };
-			_twitterParser.EntriesCount = 10;
+			//_twitterParser = new TwitterParser();
+			//_twitterParser.Serializer = new JsonSerializer();
+			//_twitterParser.Logger = new TxtLogger() { FileName = @"logs\" + DateTime.Today.ToShortDateString() + ".logs" };
+			//_twitterParser.EntriesCount = 10;
 		}
 
 		public AsyncRetValue<Boolean> AsyncCompile(Action method)
