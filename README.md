@@ -1,1 +1,1 @@
-### project closed
+### project was closed
